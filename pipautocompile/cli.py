@@ -4,9 +4,8 @@ import re
 import shlex
 import subprocess  # nosec
 import sys
-from os import PathLike
 from pathlib import Path
-from typing import AnyStr, Iterable, List, Optional, Union
+from typing import Iterable, List, Union
 
 import click
 from python_on_whales import docker
@@ -20,7 +19,7 @@ logging.basicConfig(level=logging.INFO)
 
 
 def _find_spec_files(
-    path: Union[str, bytes, PathLike] = ".",
+    path: Union[str, os.PathLike] = ".",
     patterns: Iterable[str] = (
         "**/requirements.in",
         "**/requirements/*.in",
@@ -30,8 +29,8 @@ def _find_spec_files(
 
 
 def _file_contains_regex(
-    file: Union[str, bytes, PathLike],
-    regex: AnyStr,
+    file: Union[str, bytes, os.PathLike],
+    regex: str,
     flags: Union[int, re.RegexFlag] = 0,
 ) -> bool:
     try:
@@ -60,7 +59,7 @@ def _file_contains_regex(
     default=DEFAULT_PIP_COMPILE_ARGS,
     show_default=True,
 )
-def cli(build_stage: Optional[str], pip_compile_args: Optional[str]):
+def cli(build_stage: str, pip_compile_args: str):
     """Automate pip-compile for multiple environments."""
 
     for spec in _find_spec_files():
