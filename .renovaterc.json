@@ -1,0 +1,17 @@
+{
+  "dependencyDashboard": true,
+  "extends": [
+    "config:base"
+  ],
+  "packageRules": [
+    {
+      "matchDatasources": [
+        "github-tags"
+      ],
+      "matchPackageNames": [
+        "psf/black"
+      ],
+      "versioning": "pep440"
+    }
+  ]
+}
