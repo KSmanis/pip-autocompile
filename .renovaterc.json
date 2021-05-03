@@ -9,6 +9,15 @@
         "github-tags"
       ],
       "matchPackageNames": [
+        "pre-commit/mirrors-mypy"
+      ],
+      "versioning": "loose"
+    },
+    {
+      "matchDatasources": [
+        "github-tags"
+      ],
+      "matchPackageNames": [
         "psf/black"
       ],
       "versioning": "pep440"
