@@ -106,8 +106,3 @@ def cli(build_stage: str, pip_compile_args: str):
                 cwd=spec_dir,
                 env={**os.environ, **env},
             )
-
-
-if __name__ == "__main__":
-    # pylint: disable=no-value-for-parameter
-    cli()
