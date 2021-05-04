@@ -87,8 +87,8 @@ def cli(build_stage: str, pip_compile_args: str):
                         python -m venv /opt/venv/;
                         /opt/venv/bin/pip install pip-tools;
                         /opt/venv/bin/pip-compile {pip_compile_args} '{basename_in}';
-                        chown --reference '{basename_in}' '{basename_out}';
-                        chmod --reference '{basename_in}' '{basename_out}';
+                        chown "$(stat -c '%u:%g' '{basename_in}')" '{basename_out}';
+                        chmod "$(stat -c '%a' '{basename_in}')" '{basename_out}';
                     """,
                 ],
                 envs=env,
