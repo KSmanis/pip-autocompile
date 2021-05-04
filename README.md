@@ -1,5 +1,6 @@
 # pip-autocompile
 
+[![PyPI version](https://img.shields.io/pypi/v/pip-autocompile.svg)](https://pypi.org/project/pip-autocompile/)
 [![Renovate enabled](https://img.shields.io/badge/renovate-enabled-brightgreen.svg)](https://renovatebot.com/)
 [![pre-commit](https://github.com/KSmanis/pip-autocompile/workflows/pre-commit/badge.svg)](https://github.com/KSmanis/pip-autocompile/actions?workflow=pre-commit)
 [![super-linter](https://github.com/KSmanis/pip-autocompile/workflows/super-linter/badge.svg)](https://github.com/KSmanis/pip-autocompile/actions?workflow=super-linter)
