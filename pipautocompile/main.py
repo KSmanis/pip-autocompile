@@ -82,14 +82,18 @@ def cli(build_stage: str, pip_compile_args: str):
                 command=[
                     "sh",
                     "-c",
-                    f"""
+                    """
                         set -eux;
                         python -m venv /opt/venv/;
                         /opt/venv/bin/pip install pip-tools;
-                        /opt/venv/bin/pip-compile {pip_compile_args} '{basename_in}';
-                        chown "$(stat -c '%u:%g' '{basename_in}')" '{basename_out}';
-                        chmod "$(stat -c '%a' '{basename_in}')" '{basename_out}';
-                    """,
+                        /opt/venv/bin/pip-compile {pip_compile_args} {basename_in};
+                        chown "$(stat -c '%u:%g' {basename_in})" {basename_out};
+                        chmod "$(stat -c '%a' {basename_in})" {basename_out};
+                    """.format(
+                        basename_in=shlex.quote(basename_in),
+                        basename_out=shlex.quote(basename_out),
+                        pip_compile_args=pip_compile_args,
+                    ),
                 ],
                 envs=env,
                 remove=True,
