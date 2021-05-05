@@ -5,14 +5,17 @@ import shlex
 import subprocess  # nosec
 import sys
 from pathlib import Path
-from typing import Iterable, List, Union
+from typing import Iterable, List, Tuple, Union
 
 import click
 from python_on_whales import docker
 
 DEFAULT_BUILD_STAGE = "build-deps"
 DEFAULT_PIP_COMPILE_ARGS = (
-    "--allow-unsafe --generate-hashes --no-reuse-hashes --upgrade"
+    "--allow-unsafe",
+    "--generate-hashes",
+    "--no-reuse-hashes",
+    "--upgrade",
 )
 
 logging.basicConfig(level=logging.INFO)
@@ -45,7 +48,16 @@ def _file_contains_regex(
     return False
 
 
-@click.command(context_settings={"help_option_names": ("-h", "--help")})
+def _shell_quote(s: Union[str, Iterable[str]]) -> str:
+    return shlex.quote(s) if isinstance(s, str) else " ".join(map(shlex.quote, s))
+
+
+@click.command(
+    context_settings={
+        "help_option_names": ("-h", "--help"),
+        "ignore_unknown_options": True,
+    }
+)
 @click.version_option()
 @click.option(
     "--build-stage",
@@ -53,14 +65,16 @@ def _file_contains_regex(
     default=DEFAULT_BUILD_STAGE,
     show_default=True,
 )
-@click.option(
-    "--pip-compile-args",
-    help="Arguments to pass on to pip-compile.",
-    default=DEFAULT_PIP_COMPILE_ARGS,
-    show_default=True,
+@click.argument(
+    "pip_compile_args",
+    nargs=-1,
+    type=click.UNPROCESSED,
 )
-def cli(build_stage: str, pip_compile_args: str):
+def cli(build_stage: str, pip_compile_args: Tuple[str, ...]):
     """Automate pip-compile for multiple environments."""
+
+    if not pip_compile_args:
+        pip_compile_args = DEFAULT_PIP_COMPILE_ARGS
 
     for spec in _find_spec_files():
         logging.info(f"Processing '{spec}'...")
@@ -69,7 +83,7 @@ def cli(build_stage: str, pip_compile_args: str):
         spec_dir = spec.resolve(strict=True).parent
         build_dir = spec_dir if basename_in == "requirements.in" else spec_dir.parent
 
-        args = " ".join(map(shlex.quote, sys.argv[1:]))
+        args = _shell_quote(sys.argv[1:])
         env = {"CUSTOM_COMPILE_COMMAND": f"pip-autocompile {args}"}
         has_build_stage = _file_contains_regex(
             file=build_dir / "Dockerfile",
@@ -90,9 +104,9 @@ def cli(build_stage: str, pip_compile_args: str):
                         chown "$(stat -c '%u:%g' {basename_in})" {basename_out};
                         chmod "$(stat -c '%a' {basename_in})" {basename_out};
                     """.format(
-                        basename_in=shlex.quote(basename_in),
-                        basename_out=shlex.quote(basename_out),
-                        pip_compile_args=pip_compile_args,
+                        basename_in=_shell_quote(basename_in),
+                        basename_out=_shell_quote(basename_out),
+                        pip_compile_args=_shell_quote(pip_compile_args),
                     ),
                 ],
                 envs=env,
@@ -106,7 +120,7 @@ def cli(build_stage: str, pip_compile_args: str):
             )
         else:
             subprocess.check_call(  # nosec
-                ["pip-compile", *pip_compile_args.split(), basename_in],
+                ["pip-compile", *pip_compile_args, basename_in],
                 cwd=spec_dir,
                 env={**os.environ, **env},
             )
