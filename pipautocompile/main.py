@@ -1,4 +1,3 @@
-import logging
 import os
 import re
 import shlex
@@ -17,8 +16,6 @@ DEFAULT_PIP_COMPILE_ARGS = (
     "--no-reuse-hashes",
     "--upgrade",
 )
-
-logging.basicConfig(level=logging.INFO)
 
 
 def _find_spec_files(
@@ -77,7 +74,7 @@ def cli(build_stage: str, pip_compile_args: Tuple[str, ...]):
         pip_compile_args = DEFAULT_PIP_COMPILE_ARGS
 
     for spec in _find_spec_files():
-        logging.info(f"Processing '{spec}'...")
+        click.secho(f"Compiling {spec}...", fg="yellow", bold=True)
         basename_in = spec.name
         basename_out = spec.with_suffix(".txt").name
         spec_dir = spec.resolve(strict=True).parent
