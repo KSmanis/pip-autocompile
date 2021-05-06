@@ -80,8 +80,9 @@ def cli(build_stage: str, pip_compile_args: Tuple[str, ...]):
         spec_dir = spec.resolve(strict=True).parent
         build_dir = spec_dir if basename_in == "requirements.in" else spec_dir.parent
 
-        args = _shell_quote(sys.argv[1:])
-        env = {"CUSTOM_COMPILE_COMMAND": f"pip-autocompile {args}"}
+        env = {
+            "CUSTOM_COMPILE_COMMAND": _shell_quote(("pip-autocompile", *sys.argv[1:]))
+        }
         has_build_stage = _file_contains_regex(
             file=build_dir / "Dockerfile",
             regex=fr"^FROM \S+ AS {build_stage}$",
