@@ -22,7 +22,7 @@ def _find_spec_files(
     path: Union[str, os.PathLike] = ".",
     patterns: Iterable[str] = (
         "**/requirements.in",
-        "**/requirements/*.in",
+        "**/requirements/**/*.in",
     ),
 ) -> List[Path]:
     return sorted(s for p in patterns for s in Path(path).glob(p) if s.is_file())
