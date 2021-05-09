@@ -4,6 +4,7 @@ import shlex
 import subprocess  # nosec
 import sys
 import tempfile
+from itertools import groupby
 from pathlib import Path
 from typing import Iterable, List, Tuple, Union
 
@@ -77,10 +78,10 @@ def cli(build_stage: str, pip_compile_args: Tuple[str, ...]):
     if not pip_compile_args:
         pip_compile_args = DEFAULT_PIP_COMPILE_ARGS
 
-    for spec in _find_spec_files():
-        _log(f"Processing {spec}...")
-        spec_dir = spec.resolve(strict=True).parent
-        build_dir = spec_dir if spec.name == "requirements.in" else spec_dir.parent
+    for spec_dir, specs in groupby(_find_spec_files(), key=lambda spec: spec.parent):
+        _log(f"Processing {spec_dir} directory...")
+        spec_dir = spec_dir.resolve(strict=True)
+        build_dir = spec_dir.parent if spec_dir.name == "requirements" else spec_dir
 
         env = {
             "CUSTOM_COMPILE_COMMAND": _shell_quote(("pip-autocompile", *sys.argv[1:]))
@@ -146,20 +147,21 @@ def cli(build_stage: str, pip_compile_args: Tuple[str, ...]):
                     env=docker_env,
                 )
 
-                _log("Compiling requirements...")
-                output = subprocess.check_output(  # nosec
-                    (
-                        "docker",
-                        "exec",
-                        container_id,
-                        "pip-compile",
-                        *pip_compile_args,
-                        "-o-",
-                        spec.name,
-                    ),
-                    env=docker_env,
-                )
-                spec.with_suffix(".txt").write_bytes(output)
+                for spec in specs:
+                    _log(f"Compiling {spec}...")
+                    output = subprocess.check_output(  # nosec
+                        (
+                            "docker",
+                            "exec",
+                            container_id,
+                            "pip-compile",
+                            *pip_compile_args,
+                            "-o-",
+                            spec.name,
+                        ),
+                        env=docker_env,
+                    )
+                    spec.with_suffix(".txt").write_bytes(output)
             finally:
                 if container_id is not None:
                     _log("Cleaning up container...")
@@ -167,9 +169,10 @@ def cli(build_stage: str, pip_compile_args: Tuple[str, ...]):
                         ("docker", "kill", container_id), env=docker_env
                     )
         else:
-            _log("Compiling requirements...")
-            subprocess.check_call(  # nosec
-                ["pip-compile", *pip_compile_args, spec.name],
-                cwd=spec_dir,
-                env={**os.environ, **env},
-            )
+            for spec in specs:
+                _log(f"Compiling {spec}...")
+                subprocess.check_call(  # nosec
+                    ["pip-compile", *pip_compile_args, spec.name],
+                    cwd=spec_dir,
+                    env={**os.environ, **env},
+                )
