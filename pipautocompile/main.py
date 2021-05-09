@@ -121,6 +121,8 @@ def cli(build_stage: str, pip_compile_args: Tuple[str, ...]):
                             "--cidfile",
                             cidfile,
                             "--detach",
+                            "--entrypoint",
+                            "cat",
                             *(f"--env={k}={v}" for k, v in env.items()),
                             "--interactive",
                             "--rm",
@@ -133,7 +135,6 @@ def cli(build_stage: str, pip_compile_args: Tuple[str, ...]):
                             "--workdir",
                             "/app/",
                             image_id,
-                            "cat",
                         ),
                         env=docker_env,
                     )
