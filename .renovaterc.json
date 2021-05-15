@@ -9,18 +9,10 @@
         "github-tags"
       ],
       "matchPackageNames": [
-        "pre-commit/mirrors-mypy"
-      ],
-      "versioning": "loose"
-    },
-    {
-      "matchDatasources": [
-        "github-tags"
-      ],
-      "matchPackageNames": [
+        "pre-commit/mirrors-mypy",
         "psf/black"
       ],
-      "versioning": "pep440"
+      "versioning": "loose"
     },
     {
       "automerge": true,
