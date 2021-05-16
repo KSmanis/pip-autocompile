@@ -19,6 +19,17 @@ DEFAULT_PIP_COMPILE_ARGS = (
 )
 
 
+def _is_inside_git_submodule(path: Union[bytes, str, os.PathLike]) -> bool:
+    try:
+        output = subprocess.check_output(  # nosec
+            ("git", "rev-parse", "--show-superproject-working-tree"), cwd=path
+        )
+    except (FileNotFoundError, subprocess.CalledProcessError):
+        return False
+    else:
+        return bool(output)
+
+
 def _find_spec_files(
     path: Union[str, os.PathLike] = ".",
     patterns: Iterable[str] = (
@@ -67,18 +78,24 @@ def _shell_quote(s: Union[str, Iterable[str]]) -> str:
     default=DEFAULT_BUILD_STAGE,
     show_default=True,
 )
+@click.option(
+    "--recurse-submodules", help="Recurse Git submodules.", default=False, is_flag=True
+)
 @click.argument(
     "pip_compile_args",
     nargs=-1,
     type=click.UNPROCESSED,
 )
-def cli(build_stage: str, pip_compile_args: Tuple[str, ...]):
+def cli(build_stage: str, recurse_submodules: bool, pip_compile_args: Tuple[str, ...]):
     """Automate pip-compile for multiple environments."""
 
     if not pip_compile_args:
         pip_compile_args = DEFAULT_PIP_COMPILE_ARGS
 
     for spec_dir, specs in groupby(_find_spec_files(), key=lambda spec: spec.parent):
+        if not recurse_submodules and _is_inside_git_submodule(spec_dir):
+            continue
+
         _log(f"Processing {spec_dir} directory...")
         spec_dir = spec_dir.resolve(strict=True)
         build_dir = spec_dir.parent if spec_dir.name == "requirements" else spec_dir
