@@ -19,15 +19,13 @@ DEFAULT_PIP_COMPILE_ARGS = (
 )
 
 
-def _is_inside_git_submodule(path: Union[bytes, str, os.PathLike]) -> bool:
+def _working_tree(path: Union[bytes, str, os.PathLike] = Path()) -> bytes:
     try:
-        output = subprocess.check_output(  # nosec
-            ("git", "rev-parse", "--show-superproject-working-tree"), cwd=path
+        return subprocess.check_output(  # nosec
+            ("git", "rev-parse", "--show-toplevel"), cwd=path
         )
     except (FileNotFoundError, subprocess.CalledProcessError):
-        return False
-    else:
-        return bool(output)
+        return b""
 
 
 def _find_spec_files(
@@ -92,8 +90,9 @@ def cli(build_stage: str, recurse_submodules: bool, pip_compile_args: Tuple[str,
     if not pip_compile_args:
         pip_compile_args = DEFAULT_PIP_COMPILE_ARGS
 
+    initial_working_tree = _working_tree()
     for spec_dir, specs in groupby(_find_spec_files(), key=lambda spec: spec.parent):
-        if not recurse_submodules and _is_inside_git_submodule(spec_dir):
+        if not recurse_submodules and initial_working_tree != _working_tree(spec_dir):
             continue
 
         _log(f"Processing {spec_dir} directory...")
