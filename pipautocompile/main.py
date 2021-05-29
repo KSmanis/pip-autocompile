@@ -6,7 +6,7 @@ import sys
 import tempfile
 from itertools import groupby
 from pathlib import Path
-from typing import Iterable, List, Tuple, Union
+from typing import Iterable, Iterator, Tuple, Union
 
 import click
 
@@ -34,8 +34,10 @@ def _find_spec_files(
         "**/requirements.in",
         "**/requirements/*.in",
     ),
-) -> List[Path]:
-    return sorted(s for p in patterns for s in Path(path).glob(p) if s.is_file())
+) -> Iterator[Path]:
+    for s in Path(path).rglob("*.in"):
+        if s.is_file() and any(s.resolve(strict=True).match(p) for p in patterns):
+            yield s
 
 
 def _file_contains_regex(
@@ -103,7 +105,7 @@ def cli(
         pip_compile_args = DEFAULT_PIP_COMPILE_ARGS
 
     initial_working_tree = _working_tree()
-    for spec_dir, specs in groupby(_find_spec_files(), key=lambda spec: spec.parent):
+    for spec_dir, specs in groupby(sorted(_find_spec_files()), key=lambda s: s.parent):
         if not recurse_submodules and initial_working_tree != _working_tree(spec_dir):
             continue
 
