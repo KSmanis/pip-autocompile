@@ -58,6 +58,10 @@ repos:
     rev: v0.812
     hooks:
       - id: mypy
+  - repo: https://github.com/asottile/setup-cfg-fmt
+    rev: v1.17.0
+    hooks:
+      - id: setup-cfg-fmt
   # YAML
   - repo: https://github.com/adrienverge/yamllint
     rev: v1.26.1
