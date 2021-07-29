@@ -34,7 +34,7 @@ repos:
         args: ["--number", "--wrap", "80"]
   # Python
   - repo: https://github.com/PyCQA/isort
-    rev: 5.9.2
+    rev: 5.9.3
     hooks:
       - id: isort
   - repo: https://github.com/psf/black
