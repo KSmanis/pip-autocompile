@@ -61,7 +61,7 @@ repos:
         additional_dependencies:
           - types-click
   - repo: https://github.com/asottile/setup-cfg-fmt
-    rev: v1.17.0
+    rev: v1.18.0
     hooks:
       - id: setup-cfg-fmt
   # YAML
