@@ -92,6 +92,13 @@ def _shell_quote(s: Union[str, Iterable[str]]) -> str:
     is_flag=True,
     show_default=True,
 )
+@click.option(
+    "--ssh-agent-docker-passthrough",
+    help="Allow Docker passthrough of SSH agent (if present)",
+    default=True,
+    is_flag=True,
+    show_default=True,
+)
 @click.argument(
     "pip_compile_args",
     nargs=-1,
@@ -101,6 +108,7 @@ def cli(
     build_stage: str,
     dry_run: bool,
     recurse_submodules: bool,
+    ssh_agent_docker_passthrough: bool,
     pip_compile_args: Tuple[str, ...],
 ):
     """Automate pip-compile for multiple environments."""
@@ -145,6 +153,17 @@ def cli(
                     )
                     image_id = iidfile.read_text()
 
+            container_env = env.copy()
+            container_volumes = [
+                f"{spec_dir}:/app/:ro",
+                "pip-autocompile-cache-pip:/root/.cache/pip/",
+                "pip-autocompile-cache-pip-tools:/root/.cache/pip-tools/",
+            ]
+            if ssh_agent_docker_passthrough and "SSH_AUTH_SOCK" in os.environ:
+                ssh_auth_sock = os.environ["SSH_AUTH_SOCK"]
+                container_env["SSH_AUTH_SOCK"] = ssh_auth_sock
+                container_volumes.append(f"{ssh_auth_sock}:{ssh_auth_sock}:ro")
+
             container_id = ""
             try:
                 _log("Running container...")
@@ -160,15 +179,10 @@ def cli(
                                 "--detach",
                                 "--entrypoint",
                                 "cat",
-                                *(f"--env={k}={v}" for k, v in env.items()),
+                                *(f"--env={k}={v}" for k, v in container_env.items()),
                                 "--interactive",
                                 "--rm",
-                                "--volume",
-                                f"{spec_dir}:/app/:ro",
-                                "--volume",
-                                "pip-autocompile-cache-pip:/root/.cache/pip/",
-                                "--volume",
-                                "pip-autocompile-cache-pip-tools:/root/.cache/pip-tools/",  # noqa: E501
+                                *(f"--volume={volume}" for volume in container_volumes),
                                 "--workdir",
                                 "/app/",
                                 image_id,
