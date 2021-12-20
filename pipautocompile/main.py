@@ -71,7 +71,7 @@ def _shell_quote(s: Union[str, Iterable[str]]) -> str:
         "ignore_unknown_options": True,
     }
 )
-@click.version_option()
+@click.version_option(package_name="pip-autocompile")  # type: ignore
 @click.option(
     "--build-stage",
     help="Docker build stage to search for.",
