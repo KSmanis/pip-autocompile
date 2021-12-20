@@ -86,7 +86,11 @@ def _shell_quote(s: Union[str, Iterable[str]]) -> str:
     is_flag=True,
 )
 @click.option(
-    "--recurse-submodules", help="Recurse Git submodules.", default=False, is_flag=True
+    "--recurse-submodules",
+    help="Recurse Git submodules.",
+    default=False,
+    is_flag=True,
+    show_default=True,
 )
 @click.argument(
     "pip_compile_args",
