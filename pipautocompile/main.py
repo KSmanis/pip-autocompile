@@ -22,7 +22,7 @@ DEFAULT_PIP_COMPILE_ARGS = (
 def _working_tree(path: Union[bytes, str, os.PathLike] = Path()) -> bytes:
     try:
         return subprocess.check_output(  # nosec
-            ("git", "rev-parse", "--show-toplevel"), cwd=path
+            ("git", "rev-parse", "--show-toplevel"), cwd=path, stderr=subprocess.DEVNULL
         )
     except (FileNotFoundError, subprocess.CalledProcessError):
         return b""
