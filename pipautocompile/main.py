@@ -11,6 +11,7 @@ from typing import Iterable, Iterator, Tuple, Union
 import click
 
 from pipautocompile.git import working_tree
+from pipautocompile.logging import info
 
 DEFAULT_BUILD_STAGE = "build-deps"
 DEFAULT_PIP_COMPILE_ARGS = (
@@ -48,10 +49,6 @@ def _file_contains_regex(
                 if re.search(regex, line, flags) is not None:
                     return True
     return False
-
-
-def _log(message: str) -> None:
-    click.secho(message, bold=True, fg="yellow")
 
 
 def _shell_quote(s: Union[str, Iterable[str]]) -> str:
@@ -114,7 +111,7 @@ def cli(
         if not recurse_submodules and initial_working_tree != working_tree(spec_dir):
             continue
 
-        _log(f"Processing {spec_dir} directory...")
+        info(f"Processing {spec_dir} directory...")
         spec_dir = spec_dir.resolve(strict=True)
         build_dir = spec_dir.parent if spec_dir.name == "requirements" else spec_dir
 
@@ -128,7 +125,7 @@ def cli(
         if has_build_stage:
             docker_env = {**os.environ, "DOCKER_BUILDKIT": "1"}
 
-            _log("Building Docker image...")
+            info("Building Docker image...")
             if not dry_run:
                 with tempfile.TemporaryDirectory() as temp_dir:
                     iidfile = Path(temp_dir) / "iidfile"
@@ -159,7 +156,7 @@ def cli(
 
             container_id = ""
             try:
-                _log("Running container...")
+                info("Running container...")
                 if not dry_run:
                     with tempfile.TemporaryDirectory() as temp_dir:
                         cidfile = Path(temp_dir) / "cidfile"
@@ -184,7 +181,7 @@ def cli(
                         )
                         container_id = cidfile.read_text()
 
-                _log("Installing pip-tools...")
+                info("Installing pip-tools...")
                 if not dry_run:
                     subprocess.check_call(  # nosec
                         ("docker", "exec", container_id, "pip", "install", "pip-tools"),
@@ -192,7 +189,7 @@ def cli(
                     )
 
                 for spec in specs:
-                    _log(f"Compiling {spec}...")
+                    info(f"Compiling {spec}...")
                     if not dry_run:
                         output = subprocess.check_output(  # nosec
                             (
@@ -209,14 +206,14 @@ def cli(
                         spec.with_suffix(".txt").write_bytes(output)
             finally:
                 if container_id:
-                    _log("Cleaning up container...")
+                    info("Cleaning up container...")
                     if not dry_run:
                         subprocess.check_call(  # nosec
                             ("docker", "kill", container_id), env=docker_env
                         )
         else:
             for spec in specs:
-                _log(f"Compiling {spec}...")
+                info(f"Compiling {spec}...")
                 if not dry_run:
                     subprocess.check_call(  # nosec
                         ["pip-compile", *pip_compile_args, spec.name],
