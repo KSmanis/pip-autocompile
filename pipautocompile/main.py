@@ -10,6 +10,8 @@ from typing import Iterable, Iterator, Tuple, Union
 
 import click
 
+from pipautocompile.git import working_tree
+
 DEFAULT_BUILD_STAGE = "build-deps"
 DEFAULT_PIP_COMPILE_ARGS = (
     "--allow-unsafe",
@@ -17,15 +19,6 @@ DEFAULT_PIP_COMPILE_ARGS = (
     "--no-reuse-hashes",
     "--upgrade",
 )
-
-
-def _working_tree(path: Union[bytes, str, os.PathLike] = Path()) -> bytes:
-    try:
-        return subprocess.check_output(  # nosec
-            ("git", "rev-parse", "--show-toplevel"), cwd=path, stderr=subprocess.DEVNULL
-        )
-    except (FileNotFoundError, subprocess.CalledProcessError):
-        return b""
 
 
 def _find_spec_files(
@@ -116,9 +109,9 @@ def cli(
     if not pip_compile_args:
         pip_compile_args = DEFAULT_PIP_COMPILE_ARGS
 
-    initial_working_tree = _working_tree()
+    initial_working_tree = working_tree()
     for spec_dir, specs in groupby(sorted(_find_spec_files()), key=lambda s: s.parent):
-        if not recurse_submodules and initial_working_tree != _working_tree(spec_dir):
+        if not recurse_submodules and initial_working_tree != working_tree(spec_dir):
             continue
 
         _log(f"Processing {spec_dir} directory...")
