@@ -12,7 +12,8 @@ if TYPE_CHECKING:
 import click
 
 from pipautocompile.git import working_tree
-from pipautocompile.io import file_contains_pattern, find_spec_files
+from pipautocompile.io import file_contains_pattern
+from pipautocompile.io import find_spec_files
 from pipautocompile.logging import info
 from pipautocompile.utils import quote_args
 

@@ -4,9 +4,12 @@ from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from re import RegexFlag
-    from typing import Iterable, Iterator, Union
+    from typing import Iterable
+    from typing import Iterator
+    from typing import Union
 
-    from _typeshed import StrOrBytesPath, StrPath
+    from _typeshed import StrOrBytesPath
+    from _typeshed import StrPath
 
 
 def file_contains_pattern(
