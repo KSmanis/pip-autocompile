@@ -1,5 +1,4 @@
 import os
-import re
 import shlex
 import subprocess  # nosec
 import sys
@@ -11,6 +10,7 @@ from typing import Iterable, Iterator, Tuple, Union
 import click
 
 from pipautocompile.git import working_tree
+from pipautocompile.io import file_contains_pattern
 from pipautocompile.logging import info
 
 DEFAULT_BUILD_STAGE = "build-deps"
@@ -32,23 +32,6 @@ def _find_spec_files(
     for s in Path(path).rglob("*.in"):
         if s.is_file() and any(s.resolve(strict=True).match(p) for p in patterns):
             yield s
-
-
-def _file_contains_regex(
-    file: Union[str, bytes, os.PathLike],
-    regex: str,
-    flags: Union[int, re.RegexFlag] = 0,
-) -> bool:
-    try:
-        f = open(file)
-    except OSError:
-        pass
-    else:
-        with f:
-            for line in f:
-                if re.search(regex, line, flags) is not None:
-                    return True
-    return False
 
 
 def _shell_quote(s: Union[str, Iterable[str]]) -> str:
@@ -118,9 +101,8 @@ def cli(
         env = {
             "CUSTOM_COMPILE_COMMAND": _shell_quote(("pip-autocompile", *sys.argv[1:]))
         }
-        has_build_stage = _file_contains_regex(
-            file=build_dir / "Dockerfile",
-            regex=fr"^FROM \S+ AS {build_stage}$",
+        has_build_stage = file_contains_pattern(
+            file=build_dir / "Dockerfile", pattern=fr"^FROM \S+ AS {build_stage}$"
         )
         if has_build_stage:
             docker_env = {**os.environ, "DOCKER_BUILDKIT": "1"}
