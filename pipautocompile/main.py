@@ -1,17 +1,20 @@
 import os
-import shlex
 import subprocess  # nosec
 import sys
 import tempfile
 from itertools import groupby
 from pathlib import Path
-from typing import Iterable, Tuple, Union
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from typing import Tuple
 
 import click
 
 from pipautocompile.git import working_tree
 from pipautocompile.io import file_contains_pattern, find_spec_files
 from pipautocompile.logging import info
+from pipautocompile.utils import quote_args
 
 DEFAULT_BUILD_STAGE = "build-deps"
 DEFAULT_PIP_COMPILE_ARGS = (
@@ -20,10 +23,6 @@ DEFAULT_PIP_COMPILE_ARGS = (
     "--no-reuse-hashes",
     "--upgrade",
 )
-
-
-def _shell_quote(s: Union[str, Iterable[str]]) -> str:
-    return shlex.quote(s) if isinstance(s, str) else " ".join(map(shlex.quote, s))
 
 
 @click.command(
@@ -70,7 +69,7 @@ def cli(
     dry_run: bool,
     recurse_submodules: bool,
     ssh_agent_docker_passthrough: bool,
-    pip_compile_args: Tuple[str, ...],
+    pip_compile_args: "Tuple[str, ...]",
 ):
     """Automate pip-compile for multiple environments."""
 
@@ -86,9 +85,7 @@ def cli(
         spec_dir = spec_dir.resolve(strict=True)
         build_dir = spec_dir.parent if spec_dir.name == "requirements" else spec_dir
 
-        env = {
-            "CUSTOM_COMPILE_COMMAND": _shell_quote(("pip-autocompile", *sys.argv[1:]))
-        }
+        env = {"CUSTOM_COMPILE_COMMAND": quote_args("pip-autocompile", *sys.argv[1:])}
         has_build_stage = file_contains_pattern(
             file=build_dir / "Dockerfile", pattern=fr"^FROM \S+ AS {build_stage}$"
         )
