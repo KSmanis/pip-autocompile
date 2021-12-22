@@ -1,11 +1,12 @@
+from pathlib import Path
 from re import compile
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from re import RegexFlag
-    from typing import Union
+    from typing import Iterable, Iterator, Union
 
-    from _typeshed import StrOrBytesPath
+    from _typeshed import StrOrBytesPath, StrPath
 
 
 def file_contains_pattern(
@@ -25,3 +26,12 @@ def file_contains_pattern(
                 if compiled_pattern.search(line) is not None:
                     return True
     return False
+
+
+def find_spec_files(
+    path: "StrPath" = ".",
+    patterns: "Iterable[str]" = ("**/requirements.in", "**/requirements/*.in"),
+) -> "Iterator[Path]":
+    for s in Path(path).rglob("*.in"):
+        if s.is_file() and any(s.resolve(strict=True).match(p) for p in patterns):
+            yield s

@@ -5,12 +5,12 @@ import sys
 import tempfile
 from itertools import groupby
 from pathlib import Path
-from typing import Iterable, Iterator, Tuple, Union
+from typing import Iterable, Tuple, Union
 
 import click
 
 from pipautocompile.git import working_tree
-from pipautocompile.io import file_contains_pattern
+from pipautocompile.io import file_contains_pattern, find_spec_files
 from pipautocompile.logging import info
 
 DEFAULT_BUILD_STAGE = "build-deps"
@@ -20,18 +20,6 @@ DEFAULT_PIP_COMPILE_ARGS = (
     "--no-reuse-hashes",
     "--upgrade",
 )
-
-
-def _find_spec_files(
-    path: Union[str, os.PathLike] = ".",
-    patterns: Iterable[str] = (
-        "**/requirements.in",
-        "**/requirements/*.in",
-    ),
-) -> Iterator[Path]:
-    for s in Path(path).rglob("*.in"):
-        if s.is_file() and any(s.resolve(strict=True).match(p) for p in patterns):
-            yield s
 
 
 def _shell_quote(s: Union[str, Iterable[str]]) -> str:
@@ -90,7 +78,7 @@ def cli(
         pip_compile_args = DEFAULT_PIP_COMPILE_ARGS
 
     initial_working_tree = working_tree()
-    for spec_dir, specs in groupby(sorted(_find_spec_files()), key=lambda s: s.parent):
+    for spec_dir, specs in groupby(sorted(find_spec_files()), key=lambda s: s.parent):
         if not recurse_submodules and initial_working_tree != working_tree(spec_dir):
             continue
 
