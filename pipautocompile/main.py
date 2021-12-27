@@ -184,7 +184,7 @@ def cli(
                 info(f"Compiling {spec}...")
                 if not dry_run:
                     subprocess.check_call(  # nosec
-                        ["pip-compile", *pip_compile_args, spec.name],
+                        ("pip-compile", *pip_compile_args, spec.name),
                         cwd=spec_dir,
                         env={**os.environ, **env},
                     )
