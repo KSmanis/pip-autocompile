@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from pathlib import Path
 from re import compile
 from typing import TYPE_CHECKING
@@ -6,17 +8,16 @@ if TYPE_CHECKING:
     from re import RegexFlag
     from typing import Iterable
     from typing import Iterator
-    from typing import Union
 
     from _typeshed import StrOrBytesPath
     from _typeshed import StrPath
 
 
 def file_contains_pattern(
-    file: "Union[StrOrBytesPath, int]",
+    file: StrOrBytesPath | int,
     pattern: str,
     *,
-    flags: "Union[int, RegexFlag]" = 0,
+    flags: int | RegexFlag = 0,
 ) -> bool:
     try:
         f = open(file)
@@ -32,9 +33,9 @@ def file_contains_pattern(
 
 
 def find_spec_files(
-    path: "StrPath" = ".",
-    patterns: "Iterable[str]" = ("**/requirements.in", "**/requirements/*.in"),
-) -> "Iterator[Path]":
+    path: StrPath = ".",
+    patterns: Iterable[str] = ("**/requirements.in", "**/requirements/*.in"),
+) -> Iterator[Path]:
     for s in Path(path).rglob("*.in"):
         if s.is_file() and any(s.resolve(strict=True).match(p) for p in patterns):
             yield s

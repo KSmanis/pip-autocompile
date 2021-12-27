@@ -1,13 +1,11 @@
+from __future__ import annotations
+
 import os
 import subprocess  # nosec
 import sys
 import tempfile
 from itertools import groupby
 from pathlib import Path
-from typing import TYPE_CHECKING
-
-if TYPE_CHECKING:
-    from typing import Tuple
 
 import click
 
@@ -70,7 +68,7 @@ def cli(
     dry_run: bool,
     recurse_submodules: bool,
     ssh_agent_docker_passthrough: bool,
-    pip_compile_args: "Tuple[str, ...]",
+    pip_compile_args: tuple[str, ...],
 ):
     """Automate pip-compile for multiple environments."""
 
