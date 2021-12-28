@@ -14,7 +14,7 @@ def working_tree(path: StrOrBytesPath | None = None) -> Path | None:
             ("git", "rev-parse", "--show-toplevel"),
             cwd=path,
             stderr=subprocess.DEVNULL,
-            universal_newlines=True,
+            text=True,
         )
     except (FileNotFoundError, subprocess.CalledProcessError):
         return None
