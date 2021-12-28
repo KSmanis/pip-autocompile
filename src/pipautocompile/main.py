@@ -41,21 +41,18 @@ DEFAULT_PIP_COMPILE_ARGS = (
     "-n",
     "--dry-run",
     help="Show what would happen, but don't change anything.",
-    default=False,
     is_flag=True,
 )
 @click.option(
-    "--recurse-submodules",
+    "--recurse-submodules/--no-recurse-submodules",
     help="Recurse Git submodules.",
     default=False,
-    is_flag=True,
     show_default=True,
 )
 @click.option(
-    "--ssh-agent-docker-passthrough",
+    "--ssh-agent-docker-passthrough/--no-ssh-agent-docker-passthrough",
     help="Allow Docker passthrough of SSH agent (if present)",
     default=True,
-    is_flag=True,
     show_default=True,
 )
 @click.argument(
