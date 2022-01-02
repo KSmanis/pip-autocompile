@@ -15,7 +15,7 @@ from pipautocompile.io import find_spec_files
 from pipautocompile.logging import info
 from pipautocompile.utils import quote_args
 
-DEFAULT_BUILD_STAGE = "build-deps"
+DEFAULT_DOCKER_BUILD_STAGE = "build-deps"
 DEFAULT_PIP_COMPILE_ARGS = (
     "--allow-unsafe",
     "--generate-hashes",
@@ -32,21 +32,21 @@ DEFAULT_PIP_COMPILE_ARGS = (
 )
 @click.version_option(package_name="pip-autocompile")  # type: ignore
 @click.option(
-    "--build-stage",
+    "--docker-build-stage",
     help="Docker build stage to search for.",
-    default=DEFAULT_BUILD_STAGE,
+    default=DEFAULT_DOCKER_BUILD_STAGE,
     show_default=True,
 )
 @click.option(
-    "--recurse-submodules/--no-recurse-submodules",
-    help="Recurse Git submodules.",
-    default=False,
-    show_default=True,
-)
-@click.option(
-    "--ssh-agent-docker-passthrough/--no-ssh-agent-docker-passthrough",
+    "--docker-ssh-agent-passthrough/--no-docker-ssh-agent-passthrough",
     help="Allow Docker passthrough of SSH agent (if present)",
     default=True,
+    show_default=True,
+)
+@click.option(
+    "--git-recurse-submodules/--no-git-recurse-submodules",
+    help="Recurse Git submodules.",
+    default=False,
     show_default=True,
 )
 @click.argument(
@@ -55,9 +55,9 @@ DEFAULT_PIP_COMPILE_ARGS = (
     type=click.UNPROCESSED,
 )
 def cli(
-    build_stage: str,
-    recurse_submodules: bool,
-    ssh_agent_docker_passthrough: bool,
+    docker_build_stage: str,
+    docker_ssh_agent_passthrough: bool,
+    git_recurse_submodules: bool,
     pip_compile_args: tuple[str, ...],
 ):
     """Automate pip-compile for multiple environments."""
@@ -67,7 +67,9 @@ def cli(
 
     initial_working_tree = working_tree()
     for spec_dir, specs in groupby(sorted(find_spec_files()), key=lambda s: s.parent):
-        if not recurse_submodules and initial_working_tree != working_tree(spec_dir):
+        if not git_recurse_submodules and initial_working_tree != working_tree(
+            spec_dir
+        ):
             continue
 
         info(f"Processing {spec_dir} directory...")
@@ -76,7 +78,8 @@ def cli(
 
         env = {"CUSTOM_COMPILE_COMMAND": quote_args("pip-autocompile", *sys.argv[1:])}
         has_build_stage = file_contains_pattern(
-            file=build_dir / "Dockerfile", pattern=fr"^FROM \S+ AS {build_stage}$"
+            file=build_dir / "Dockerfile",
+            pattern=fr"^FROM \S+ AS {docker_build_stage}$",
         )
         if has_build_stage:
             docker_env = {**os.environ, "DOCKER_BUILDKIT": "1"}
@@ -91,7 +94,7 @@ def cli(
                         "--iidfile",
                         iidfile,
                         "--target",
-                        build_stage,
+                        docker_build_stage,
                         build_dir,
                     ),
                     env=docker_env,
@@ -104,7 +107,7 @@ def cli(
                 "pip-autocompile-cache-pip:/root/.cache/pip/",
                 "pip-autocompile-cache-pip-tools:/root/.cache/pip-tools/",
             ]
-            if ssh_agent_docker_passthrough and "SSH_AUTH_SOCK" in os.environ:
+            if docker_ssh_agent_passthrough and "SSH_AUTH_SOCK" in os.environ:
                 ssh_auth_sock = os.environ["SSH_AUTH_SOCK"]
                 container_env["SSH_AUTH_SOCK"] = ssh_auth_sock
                 container_volumes.append(f"{ssh_auth_sock}:{ssh_auth_sock}:ro")
