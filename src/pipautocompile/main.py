@@ -38,12 +38,6 @@ DEFAULT_PIP_COMPILE_ARGS = (
     show_default=True,
 )
 @click.option(
-    "-n",
-    "--dry-run",
-    help="Show what would happen, but don't change anything.",
-    is_flag=True,
-)
-@click.option(
     "--recurse-submodules/--no-recurse-submodules",
     help="Recurse Git submodules.",
     default=False,
@@ -62,7 +56,6 @@ DEFAULT_PIP_COMPILE_ARGS = (
 )
 def cli(
     build_stage: str,
-    dry_run: bool,
     recurse_submodules: bool,
     ssh_agent_docker_passthrough: bool,
     pip_compile_args: tuple[str, ...],
@@ -89,22 +82,21 @@ def cli(
             docker_env = {**os.environ, "DOCKER_BUILDKIT": "1"}
 
             info("Building Docker image...")
-            if not dry_run:
-                with tempfile.TemporaryDirectory() as temp_dir:
-                    iidfile = Path(temp_dir) / "iidfile"
-                    subprocess.check_call(  # nosec
-                        (
-                            "docker",
-                            "build",
-                            "--iidfile",
-                            iidfile,
-                            "--target",
-                            build_stage,
-                            build_dir,
-                        ),
-                        env=docker_env,
-                    )
-                    image_id = iidfile.read_text()
+            with tempfile.TemporaryDirectory() as temp_dir:
+                iidfile = Path(temp_dir) / "iidfile"
+                subprocess.check_call(  # nosec
+                    (
+                        "docker",
+                        "build",
+                        "--iidfile",
+                        iidfile,
+                        "--target",
+                        build_stage,
+                        build_dir,
+                    ),
+                    env=docker_env,
+                )
+                image_id = iidfile.read_text()
 
             container_env = env.copy()
             container_volumes = [
@@ -120,66 +112,61 @@ def cli(
             container_id = ""
             try:
                 info("Running container...")
-                if not dry_run:
-                    with tempfile.TemporaryDirectory() as temp_dir:
-                        cidfile = Path(temp_dir) / "cidfile"
-                        subprocess.check_call(  # nosec
-                            (
-                                "docker",
-                                "run",
-                                "--cidfile",
-                                cidfile,
-                                "--detach",
-                                "--entrypoint",
-                                "cat",
-                                *(f"--env={k}={v}" for k, v in container_env.items()),
-                                "--interactive",
-                                "--rm",
-                                *(f"--volume={volume}" for volume in container_volumes),
-                                "--workdir",
-                                "/app/",
-                                image_id,
-                            ),
-                            env=docker_env,
-                        )
-                        container_id = cidfile.read_text()
-
-                info("Installing pip-tools...")
-                if not dry_run:
+                with tempfile.TemporaryDirectory() as temp_dir:
+                    cidfile = Path(temp_dir) / "cidfile"
                     subprocess.check_call(  # nosec
-                        ("docker", "exec", container_id, "pip", "install", "pip-tools"),
+                        (
+                            "docker",
+                            "run",
+                            "--cidfile",
+                            cidfile,
+                            "--detach",
+                            "--entrypoint",
+                            "cat",
+                            *(f"--env={k}={v}" for k, v in container_env.items()),
+                            "--interactive",
+                            "--rm",
+                            *(f"--volume={volume}" for volume in container_volumes),
+                            "--workdir",
+                            "/app/",
+                            image_id,
+                        ),
                         env=docker_env,
                     )
+                    container_id = cidfile.read_text()
+
+                info("Installing pip-tools...")
+                subprocess.check_call(  # nosec
+                    ("docker", "exec", container_id, "pip", "install", "pip-tools"),
+                    env=docker_env,
+                )
 
                 for spec in specs:
                     info(f"Compiling {spec}...")
-                    if not dry_run:
-                        output = subprocess.check_output(  # nosec
-                            (
-                                "docker",
-                                "exec",
-                                container_id,
-                                "pip-compile",
-                                *pip_compile_args,
-                                "-o-",
-                                spec.name,
-                            ),
-                            env=docker_env,
-                        )
-                        spec.with_suffix(".txt").write_bytes(output)
+                    output = subprocess.check_output(  # nosec
+                        (
+                            "docker",
+                            "exec",
+                            container_id,
+                            "pip-compile",
+                            *pip_compile_args,
+                            "-o-",
+                            spec.name,
+                        ),
+                        env=docker_env,
+                    )
+                    spec.with_suffix(".txt").write_bytes(output)
             finally:
                 if container_id:
                     info("Cleaning up container...")
-                    if not dry_run:
-                        subprocess.check_call(  # nosec
-                            ("docker", "kill", container_id), env=docker_env
-                        )
+                    subprocess.check_call(  # nosec
+                        ("docker", "kill", container_id), env=docker_env
+                    )
         else:
             for spec in specs:
                 info(f"Compiling {spec}...")
-                if not dry_run:
-                    subprocess.check_call(  # nosec
-                        ("pip-compile", *pip_compile_args, spec.name),
-                        cwd=spec_dir,
-                        env={**os.environ, **env},
-                    )
+                subprocess.check_call(  # nosec
+                    ("pip-compile", *pip_compile_args, spec.name),
+                    cwd=spec_dir,
+                    env={**os.environ, **env},
+                )
