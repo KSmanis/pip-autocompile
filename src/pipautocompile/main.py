@@ -6,6 +6,7 @@ import sys
 import tempfile
 from itertools import groupby
 from pathlib import Path
+from shlex import split
 
 import click
 
@@ -15,26 +16,13 @@ from pipautocompile.io import find_spec_files
 from pipautocompile.logging import info
 from pipautocompile.utils import quote_args
 
-DEFAULT_DOCKER_BUILD_STAGE = "build-deps"
-DEFAULT_PIP_COMPILE_ARGS = (
-    "--allow-unsafe",
-    "--generate-hashes",
-    "--no-reuse-hashes",
-    "--upgrade",
-)
 
-
-@click.command(
-    context_settings={
-        "help_option_names": ("-h", "--help"),
-        "ignore_unknown_options": True,
-    }
-)
+@click.command(context_settings={"help_option_names": ["-h", "--help"]})
 @click.version_option(package_name="pip-autocompile")  # type: ignore
 @click.option(
     "--docker-build-stage",
     help="Docker build stage to search for.",
-    default=DEFAULT_DOCKER_BUILD_STAGE,
+    default="build-deps",
     show_default=True,
 )
 @click.option(
@@ -49,21 +37,22 @@ DEFAULT_PIP_COMPILE_ARGS = (
     default=False,
     show_default=True,
 )
-@click.argument(
-    "pip_compile_args",
-    nargs=-1,
-    type=click.UNPROCESSED,
+@click.option(
+    "--pip-compile-args",
+    "pip_compile_args_str",
+    help="Arguments to pass directly to the pip-compile command.",
+    default="--allow-unsafe --generate-hashes --no-reuse-hashes --upgrade",
+    show_default=True,
 )
 def cli(
     docker_build_stage: str,
     docker_ssh_agent_passthrough: bool,
     git_recurse_submodules: bool,
-    pip_compile_args: tuple[str, ...],
+    pip_compile_args_str: str,
 ):
     """Automate pip-compile for multiple environments."""
 
-    if not pip_compile_args:
-        pip_compile_args = DEFAULT_PIP_COMPILE_ARGS
+    pip_compile_args = split(pip_compile_args_str)
 
     initial_working_tree = working_tree()
     for spec_dir, specs in groupby(sorted(find_spec_files()), key=lambda s: s.parent):
