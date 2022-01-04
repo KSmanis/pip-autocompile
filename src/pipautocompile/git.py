@@ -1,22 +1,20 @@
 from __future__ import annotations
 
 import subprocess  # nosec
-from pathlib import Path
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from _typeshed import StrOrBytesPath
 
 
-def working_tree(path: StrOrBytesPath | None = None) -> Path | None:
+def inside_submodule(path: StrOrBytesPath | None = None) -> bool:
     try:
         output = subprocess.check_output(  # nosec
-            ("git", "rev-parse", "--show-toplevel"),
+            ("git", "rev-parse", "--show-superproject-working-tree"),
             cwd=path,
             stderr=subprocess.DEVNULL,
-            text=True,
         )
     except (FileNotFoundError, subprocess.CalledProcessError):
-        return None
+        return False
     else:
-        return Path(output.strip())
+        return output != b""

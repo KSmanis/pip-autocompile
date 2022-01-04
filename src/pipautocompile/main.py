@@ -10,7 +10,7 @@ from shlex import split
 
 import click
 
-from pipautocompile.git import working_tree
+from pipautocompile.git import inside_submodule
 from pipautocompile.io import file_contains_pattern
 from pipautocompile.io import find_spec_files
 from pipautocompile.logging import info
@@ -54,11 +54,8 @@ def cli(
 
     pip_compile_args = split(pip_compile_args_str)
 
-    initial_working_tree = working_tree()
     for spec_dir, specs in groupby(sorted(find_spec_files()), key=lambda s: s.parent):
-        if not git_recurse_submodules and initial_working_tree != working_tree(
-            spec_dir
-        ):
+        if not git_recurse_submodules and inside_submodule(spec_dir):
             continue
 
         info(f"Processing {spec_dir} directory...")
