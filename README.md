@@ -10,3 +10,14 @@
 [![security: bandit](https://img.shields.io/badge/security-bandit-yellow.svg)](https://github.com/PyCQA/bandit)
 
 Automate pip-compile for multiple environments.
+
+## Dependencies
+
+### Runtime
+
+- [pip-tools](https://github.com/jazzband/pip-tools): Compile requirements
+  locally
+- [Docker CLI](https://github.com/docker/cli) >= 18.09: Compile requirements
+  using containers
+- [Git](https://git-scm.com/) >= 2.13: Skip Git submodules when
+  `--no-git-recurse-submodules`
