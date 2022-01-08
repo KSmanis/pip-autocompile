@@ -17,7 +17,5 @@ Automate pip-compile for multiple environments.
 
 - [pip-tools](https://github.com/jazzband/pip-tools): Compile requirements
   locally
-- [Docker CLI](https://github.com/docker/cli) >= 18.09: Compile requirements
-  using containers
 - [Git](https://git-scm.com/) >= 2.13: Skip Git submodules when
   `--no-git-recurse-submodules`

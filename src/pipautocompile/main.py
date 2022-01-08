@@ -3,12 +3,11 @@ from __future__ import annotations
 import os
 import subprocess  # nosec
 import sys
-import tempfile
 from itertools import groupby
-from pathlib import Path
 from shlex import split
 
 import click
+from python_on_whales import docker
 
 from pipautocompile.git import inside_submodule
 from pipautocompile.io import file_contains_pattern
@@ -53,6 +52,9 @@ def cli(
     """Automate pip-compile for multiple environments."""
 
     pip_compile_args = split(pip_compile_args_str)
+    pip_compile_env = {
+        "CUSTOM_COMPILE_COMMAND": quote_args("pip-autocompile", *sys.argv[1:])
+    }
 
     for spec_dir, specs in groupby(sorted(find_spec_files()), key=lambda s: s.parent):
         if not git_recurse_submodules and inside_submodule(spec_dir):
@@ -62,100 +64,77 @@ def cli(
         spec_dir = spec_dir.resolve(strict=True)
         build_dir = spec_dir.parent if spec_dir.name == "requirements" else spec_dir
 
-        env = {"CUSTOM_COMPILE_COMMAND": quote_args("pip-autocompile", *sys.argv[1:])}
         has_build_stage = file_contains_pattern(
             file=build_dir / "Dockerfile",
             pattern=fr"^FROM \S+ AS {docker_build_stage}$",
         )
         if has_build_stage:
-            docker_env = {**os.environ, "DOCKER_BUILDKIT": "1"}
-
             info("Building Docker image...")
-            with tempfile.TemporaryDirectory() as temp_dir:
-                iidfile = Path(temp_dir) / "iidfile"
-                subprocess.check_call(  # nosec
-                    (
-                        "docker",
-                        "build",
-                        "--iidfile",
-                        iidfile,
-                        "--target",
-                        docker_build_stage,
-                        build_dir,
-                    ),
-                    env=docker_env,
-                )
-                image_id = iidfile.read_text()
+            image = docker.build(target=docker_build_stage, context_path=build_dir)
 
-            container_env = env.copy()
+            container_env = {}
             container_volumes = [
-                f"{spec_dir}:/app/:ro",
-                "pip-autocompile-cache-pip:/root/.cache/pip/",
-                "pip-autocompile-cache-pip-tools:/root/.cache/pip-tools/",
+                (spec_dir, "/app/specs/", "ro"),
+                ("pip-autocompile-cache-pip", "/root/.cache/pip/"),
+                ("pip-autocompile-cache-pip-tools", "/root/.cache/pip-tools/"),
             ]
             if docker_ssh_agent_passthrough and "SSH_AUTH_SOCK" in os.environ:
                 ssh_auth_sock = os.environ["SSH_AUTH_SOCK"]
                 container_env["SSH_AUTH_SOCK"] = ssh_auth_sock
-                container_volumes.append(f"{ssh_auth_sock}:{ssh_auth_sock}:ro")
+                container_volumes.append((ssh_auth_sock, ssh_auth_sock, "ro"))
 
-            container_id = ""
-            try:
-                info("Running container...")
-                with tempfile.TemporaryDirectory() as temp_dir:
-                    cidfile = Path(temp_dir) / "cidfile"
-                    subprocess.check_call(  # nosec
-                        (
-                            "docker",
-                            "run",
-                            "--cidfile",
-                            cidfile,
-                            "--detach",
-                            "--entrypoint",
-                            "cat",
-                            *(f"--env={k}={v}" for k, v in container_env.items()),
-                            "--interactive",
-                            "--rm",
-                            *(f"--volume={volume}" for volume in container_volumes),
-                            "--workdir",
-                            "/app/",
-                            image_id,
-                        ),
-                        env=docker_env,
-                    )
-                    container_id = cidfile.read_text()
+            info("Running container...")
+            with docker.run(
+                detach=True,
+                entrypoint="env",
+                envs=container_env,
+                remove=True,
+                user="0:0",
+                volumes=container_volumes,
+                workdir="/app/specs",
+                image=image,
+                command=["sleep", "86400"],
+            ) as container:
+                info("Creating venv...")
+                container.execute(
+                    tty=True, command=["python", "-m", "venv", "--clear", "/app/venv"]
+                )
+
+                info("Upgrading core dependencies...")
+                container.execute(
+                    tty=True,
+                    command=[
+                        "/app/venv/bin/pip",
+                        "install",
+                        "--upgrade",
+                        "pip",
+                        "setuptools",
+                    ],
+                )
 
                 info("Installing pip-tools...")
-                subprocess.check_call(  # nosec
-                    ("docker", "exec", container_id, "pip", "install", "pip-tools"),
-                    env=docker_env,
+                container.execute(
+                    tty=True, command=["/app/venv/bin/pip", "install", "pip-tools"]
                 )
 
                 for spec in specs:
                     info(f"Compiling {spec}...")
-                    output = subprocess.check_output(  # nosec
-                        (
-                            "docker",
-                            "exec",
-                            container_id,
-                            "pip-compile",
+                    container.execute(
+                        envs=pip_compile_env,
+                        tty=True,
+                        command=[
+                            "/app/venv/bin/pip-compile",
                             *pip_compile_args,
-                            "-o-",
+                            "--output-file=/app/output.txt",
                             spec.name,
-                        ),
-                        env=docker_env,
+                        ],
                     )
-                    spec.with_suffix(".txt").write_bytes(output)
-            finally:
-                if container_id:
-                    info("Cleaning up container...")
-                    subprocess.check_call(  # nosec
-                        ("docker", "kill", container_id), env=docker_env
-                    )
+                    container.copy_from("/app/output.txt", spec.with_suffix(".txt"))
         else:
             for spec in specs:
                 info(f"Compiling {spec}...")
                 subprocess.check_call(  # nosec
                     ("pip-compile", *pip_compile_args, spec.name),
                     cwd=spec_dir,
-                    env={**os.environ, **env},
+                    env={**os.environ, **pip_compile_env},
                 )
