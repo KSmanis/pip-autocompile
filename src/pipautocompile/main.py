@@ -4,7 +4,9 @@ import os
 import subprocess  # nosec
 import sys
 from itertools import groupby
+from pathlib import Path
 from shlex import split
+from typing import TYPE_CHECKING
 
 import click
 from python_on_whales import docker
@@ -14,6 +16,9 @@ from pipautocompile.io import file_contains_pattern
 from pipautocompile.io import find_spec_files
 from pipautocompile.logging import info
 from pipautocompile.utils import quote_args
+
+if TYPE_CHECKING:
+    from python_on_whales.components.volume.cli_wrapper import VolumeDefinition
 
 
 @click.command(context_settings={"help_option_names": ["-h", "--help"]})
@@ -72,9 +77,8 @@ def cli(
             info("Building Docker image...")
             image = docker.build(target=docker_build_stage, context_path=build_dir)
 
-            container_env = {}
-            container_volumes = [
-                (spec_dir, "/app/specs/", "ro"),
+            container_env: dict[str, str] = {}
+            container_volumes: list[VolumeDefinition] = [
                 ("pip-autocompile-cache-pip", "/root/.cache/pip/"),
                 ("pip-autocompile-cache-pip-tools", "/root/.cache/pip-tools/"),
             ]
@@ -86,19 +90,18 @@ def cli(
             info("Running container...")
             with docker.run(
                 detach=True,
-                entrypoint="env",
+                entrypoint="",
                 envs=container_env,
                 remove=True,
                 stop_signal="SIGKILL",
                 user="0:0",
                 volumes=container_volumes,
-                workdir="/app/specs",
                 image=image,
                 command=["sleep", "86400"],
             ) as container:
                 info("Creating venv...")
                 container.execute(
-                    tty=True, command=["python", "-m", "venv", "--clear", "/app/venv"]
+                    tty=True, command=["python", "-m", "venv", "--clear", "/app/venv/"]
                 )
 
                 info("Upgrading core dependencies...")
@@ -120,22 +123,24 @@ def cli(
 
                 for spec in specs:
                     info(f"Compiling {spec}...")
+                    container_spec = Path("/app/") / spec.name
+                    container.copy_to(spec, container_spec)
                     container.execute(
                         envs=pip_compile_env,
                         tty=True,
                         command=[
                             "/app/venv/bin/pip-compile",
                             *pip_compile_args,
-                            "--output-file=/app/output.txt",
-                            spec.name,
+                            container_spec,
                         ],
                     )
-                    container.copy_from("/app/output.txt", spec.with_suffix(".txt"))
+                    container.copy_from(
+                        container_spec.with_suffix(".txt"), spec.with_suffix(".txt")
+                    )
         else:
             for spec in specs:
                 info(f"Compiling {spec}...")
                 subprocess.check_call(  # nosec
-                    ("pip-compile", *pip_compile_args, spec.name),
-                    cwd=spec_dir,
+                    ("pip-compile", *pip_compile_args, spec),
                     env={**os.environ, **pip_compile_env},
                 )
