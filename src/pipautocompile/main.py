@@ -121,17 +121,21 @@ def cli(
                     tty=True, command=["/app/venv/bin/pip", "install", "pip-tools"]
                 )
 
+                info("Copying specs...")
+                container_spec_dir = Path("/app/specs/")
+                container.copy_to(spec_dir, container_spec_dir)
+
                 for spec in specs:
                     info(f"Compiling {spec}...")
-                    container_spec = Path("/app/") / spec.name
-                    container.copy_to(spec, container_spec)
+                    container_spec = container_spec_dir / spec.name
                     container.execute(
                         envs=pip_compile_env,
                         tty=True,
+                        workdir=container_spec_dir,
                         command=[
                             "/app/venv/bin/pip-compile",
                             *pip_compile_args,
-                            container_spec,
+                            container_spec.name,
                         ],
                     )
                     container.copy_from(
@@ -141,6 +145,7 @@ def cli(
             for spec in specs:
                 info(f"Compiling {spec}...")
                 subprocess.check_call(  # nosec
-                    ("pip-compile", *pip_compile_args, spec),
+                    ("pip-compile", *pip_compile_args, spec.name),
+                    cwd=spec_dir,
                     env={**os.environ, **pip_compile_env},
                 )
