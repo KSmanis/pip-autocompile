@@ -89,6 +89,7 @@ def cli(
                 entrypoint="env",
                 envs=container_env,
                 remove=True,
+                stop_signal="SIGKILL",
                 user="0:0",
                 volumes=container_volumes,
                 workdir="/app/specs",
