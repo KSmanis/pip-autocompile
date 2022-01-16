@@ -39,6 +39,7 @@ repos:
     rev: v0.30.0
     hooks:
       - id: markdownlint
+        exclude: "^CHANGELOG.md$"
   - repo: https://github.com/executablebooks/mdformat
     rev: 0.7.13
     hooks:
@@ -47,6 +48,7 @@ repos:
           - mdformat-gfm
           - mdformat-tables
         args: ["--number", "--wrap", "80"]
+        exclude: "^CHANGELOG.md$"
   # Python
   - repo: https://github.com/PyCQA/isort
     rev: 5.10.1
