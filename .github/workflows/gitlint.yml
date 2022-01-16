@@ -1,0 +1,20 @@
+---
+name: gitlint
+
+on: [push]
+
+jobs:
+  gitlint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+      - name: Install gitlint
+        run: |
+          pip install --upgrade pip setuptools
+          pip install gitlint
+      - name: Run gitlint
+        run: |
+          gitlint
