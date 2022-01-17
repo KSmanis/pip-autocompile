@@ -16,5 +16,4 @@ jobs:
         uses: relekang/python-semantic-release@v7.23.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          repository_username: ${{ secrets.PYPI_USERNAME }}
-          repository_password: ${{ secrets.PYPI_PASSWORD }}
+          pypi_token: ${{ secrets.PYPI_TOKEN }}
