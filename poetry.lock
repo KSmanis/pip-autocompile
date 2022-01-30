@@ -155,7 +155,7 @@ email = ["email-validator (>=1.0.3)"]
 
 [[package]]
 name = "python-on-whales"
-version = "0.35.0"
+version = "0.36.1"
 description = "A Docker client for Python, designed to be fun and intuitive!"
 category = "main"
 optional = false
@@ -297,7 +297,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "3aaa851ca592b468d53713c7dc77c8b3d6514fcfd60bb160488bf8dd9926523a"
+content-hash = "365ef55780c25649ca3edc1f2a54d5f4878aacad2d08ec1d1e602763228f3063"
 
 [metadata.files]
 certifi = [
@@ -390,8 +390,8 @@ pydantic = [
     {file = "pydantic-1.9.0.tar.gz", hash = "sha256:742645059757a56ecd886faf4ed2441b9c0cd406079c2b4bee51bcc3fbcd510a"},
 ]
 python-on-whales = [
-    {file = "python-on-whales-0.35.0.tar.gz", hash = "sha256:5788967778a39e0e0770f7aa77b435bdec32743c614bdfe73a5994dbe3b37779"},
-    {file = "python_on_whales-0.35.0-py3-none-any.whl", hash = "sha256:8a588a042548b0edee3a6fb28db52d0cfd2d34ef48d272bd0d9e645b00d856af"},
+    {file = "python-on-whales-0.36.1.tar.gz", hash = "sha256:d76907f4af335a845c938e0fb80dbc45c7a7f438da8f091d13738e87c889d8ce"},
+    {file = "python_on_whales-0.36.1-py3-none-any.whl", hash = "sha256:f5719c7f7650a97313cfe5043bc8bf4782c66f4bbb8534cc430980a995d640b6"},
 ]
 pyyaml = [
     {file = "PyYAML-6.0-cp310-cp310-macosx_10_9_x86_64.whl", hash = "sha256:d4db7c7aef085872ef65a8fd7d6d09a14ae91f691dec3e87ee5ee0539d516f53"},
