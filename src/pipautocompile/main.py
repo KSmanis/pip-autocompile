@@ -71,7 +71,7 @@ def cli(
 
         has_build_stage = file_contains_pattern(
             file=build_dir / "Dockerfile",
-            pattern=fr"^FROM \S+ AS {docker_build_stage}$",
+            pattern=rf"^FROM \S+ AS {docker_build_stage}$",
         )
         if has_build_stage:
             info("Building Docker image...")
