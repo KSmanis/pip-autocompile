@@ -10,7 +10,7 @@ regex=^(\[.+\]:? )?https?://
 
 [ignore-by-author-name]
 regex=Renovate Bot
-ignore=max-title-length
+ignore=title-max-length,body-is-missing
 
 [ignore-by-title]
 regex=^\d+\.\d+\.\d+$
