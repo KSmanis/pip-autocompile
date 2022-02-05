@@ -66,6 +66,7 @@ repos:
     rev: 1.7.2
     hooks:
       - id: bandit
+        args: ["--configfile", ".bandit.yml"]
   - repo: https://github.com/asottile/pyupgrade
     rev: v2.31.0
     hooks:

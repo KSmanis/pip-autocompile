@@ -1,0 +1,28 @@
+---
+name: test
+
+on: [push, pull_request]
+
+jobs:
+  pytest:
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.7", "3.8", "3.9", "3.10"]
+        os: [macos-latest, ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install Poetry
+        uses: abatilo/actions-poetry@v2.1.4
+      - name: Install dependencies
+        run: |
+          poetry install --ansi -v
+      - name: Run pytest
+        run: |
+          poetry run pytest --color=yes

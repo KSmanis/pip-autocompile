@@ -23,7 +23,10 @@ click = "^8"
 python-on-whales = "^0.36.0"
 
 [tool.poetry.dev-dependencies]
+# lint
 pre-commit = "^2.16.0"
+# test
+pytest-cov = "^3.0.0"
 
 [tool.poetry.scripts]
 pip-autocompile = "pipautocompile.main:cli"
@@ -33,6 +36,10 @@ profile = "black"
 add_imports = ["from __future__ import annotations"]
 append_only = true
 force_single_line = true
+
+[tool.pytest.ini_options]
+addopts = "--cov=src"
+testpaths = ["tests"]
 
 [tool.semantic_release]
 build_command = "pip install poetry && poetry build"
