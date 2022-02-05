@@ -8,5 +8,9 @@ line-length=72
 [ignore-body-lines]
 regex=^(\[.+\]:? )?https?://
 
+[ignore-by-author-name]
+regex=Renovate Bot
+ignore=max-title-length
+
 [ignore-by-title]
 regex=^\d+\.\d+\.\d+$
