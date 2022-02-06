@@ -8,7 +8,5 @@ if TYPE_CHECKING:
     from typing import Any
 
 
-def info(*args: Any, **kwargs: Any) -> None:
-    kwargs["bold"] = True
-    kwargs["fg"] = "yellow"
-    click.secho(*args, **kwargs)
+def info(message: Any | None = None, *, nl: bool = True) -> None:
+    click.secho(message=message, nl=nl, bold=True, fg="yellow")
