@@ -9,6 +9,8 @@ from pipautocompile.utils import quote_args
     argnames=("args", "expected"),
     argvalues=(
         (tuple(), ""),
+        ((None,), "None"),
+        ((1, None, 1.5, True, "", " foo", "bar "), "1 None 1.5 True '' ' foo' 'bar '"),
         (("",), "''"),
         (("", ""), "'' ''"),
         (("foo",), "foo"),
@@ -22,8 +24,12 @@ from pipautocompile.utils import quote_args
         ((" foo ", "bar "), "' foo ' 'bar '"),
         ((" foo ", " bar "), "' foo ' ' bar '"),
         ((" foo ", " bar ", " baz "), "' foo ' ' bar ' ' baz '"),
+        (
+            ("pip-autocompile", "--pip-compile-args", "--allow-unsafe --upgrade"),
+            "pip-autocompile --pip-compile-args '--allow-unsafe --upgrade'",
+        ),
     ),
     ids=lambda argvalue: repr(argvalue),
 )
-def test_quote_args(args: tuple[str], expected: str) -> None:
+def test_quote_args(args: tuple, expected: str) -> None:
     assert quote_args(*args) == expected
