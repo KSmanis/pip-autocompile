@@ -36,6 +36,7 @@ def find_spec_files(
     path: StrPath = ".",
     patterns: Iterable[str] = ("**/requirements.in", "**/requirements/*.in"),
 ) -> Iterator[Path]:
-    for s in Path(path).rglob("*.in"):
-        if s.is_file() and any(s.resolve(strict=True).match(p) for p in patterns):
-            yield s
+    for pattern in patterns:
+        for spec in Path(path).glob(pattern):
+            if spec.is_file():
+                yield spec
