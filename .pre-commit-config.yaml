@@ -77,6 +77,7 @@ repos:
     hooks:
       - id: mypy
         additional_dependencies:
+          - python-on-whales
           - types-click
   - repo: https://github.com/asottile/yesqa
     rev: v1.3.0

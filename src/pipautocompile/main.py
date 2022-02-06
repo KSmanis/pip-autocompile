@@ -53,7 +53,7 @@ def cli(
     docker_ssh_agent_passthrough: bool,
     git_recurse_submodules: bool,
     pip_compile_args_str: str,
-):
+) -> None:
     """Automate pip-compile for multiple environments."""
 
     pip_compile_args = split(pip_compile_args_str)
@@ -96,9 +96,9 @@ def cli(
                 stop_signal="SIGKILL",
                 user="0:0",
                 volumes=container_volumes,
-                image=image,
+                image=image,  # type: ignore[arg-type]
                 command=["sleep", "86400"],
-            ) as container:
+            ) as container:  # type: ignore[union-attr]
                 info("Creating venv...")
                 container.execute(
                     tty=True, command=["python", "-m", "venv", "--clear", "/app/venv/"]
