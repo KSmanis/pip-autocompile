@@ -48,11 +48,19 @@ if TYPE_CHECKING:
     default="--allow-unsafe --generate-hashes --no-reuse-hashes --upgrade",
     show_default=True,
 )
+@click.option(
+    "--spec-pattern",
+    help="Glob pattern to match spec files; may be used more than once.",
+    multiple=True,
+    default=("**/requirements.in", "**/requirements/*.in"),
+    show_default=True,
+)
 def cli(
     docker_build_stage: str,
     docker_ssh_agent_passthrough: bool,
     git_recurse_submodules: bool,
     pip_compile_args_str: str,
+    spec_pattern: tuple[str],
 ) -> None:
     """Automate pip-compile for multiple environments."""
 
@@ -61,7 +69,8 @@ def cli(
         "CUSTOM_COMPILE_COMMAND": quote_args("pip-autocompile", *sys.argv[1:])
     }
 
-    for spec_dir, specs in groupby(sorted(find_spec_files()), key=lambda s: s.parent):
+    spec_files = sorted({f for p in spec_pattern for f in find_spec_files(p)})
+    for spec_dir, specs in groupby(spec_files, key=lambda s: s.parent):
         if not git_recurse_submodules and inside_submodule(spec_dir):
             continue
 

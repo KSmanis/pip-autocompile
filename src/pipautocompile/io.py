@@ -6,7 +6,6 @@ from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from re import RegexFlag
-    from typing import Iterable
     from typing import Iterator
 
     from _typeshed import StrOrBytesPath
@@ -32,11 +31,7 @@ def file_contains_pattern(
     return False
 
 
-def find_spec_files(
-    path: StrPath = ".",
-    patterns: Iterable[str] = ("**/requirements.in", "**/requirements/*.in"),
-) -> Iterator[Path]:
-    for pattern in patterns:
-        for spec in Path(path).glob(pattern):
-            if spec.is_file():
-                yield spec
+def find_spec_files(pattern: str, path: StrPath = ".") -> Iterator[Path]:
+    for spec in Path(path).glob(pattern):
+        if spec.is_file():
+            yield spec
