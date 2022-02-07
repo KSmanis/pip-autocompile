@@ -1,11 +1,11 @@
 from __future__ import annotations
 
 from pathlib import Path
-from re import compile
+from re import search
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from re import RegexFlag
+    from typing import Any
     from typing import Iterator
 
     from _typeshed import StrOrBytesPath
@@ -13,20 +13,16 @@ if TYPE_CHECKING:
 
 
 def file_contains_pattern(
-    file: StrOrBytesPath | int,
-    pattern: str,
-    *,
-    flags: int | RegexFlag = 0,
+    file: StrOrBytesPath | int, pattern: str, **search_kwargs: Any
 ) -> bool:
     try:
         f = open(file)
     except OSError:
         pass
     else:
-        compiled_pattern = compile(pattern, flags)
         with f:
             for line in f:
-                if compiled_pattern.search(line) is not None:
+                if search(pattern, line, **search_kwargs):
                     return True
     return False
 

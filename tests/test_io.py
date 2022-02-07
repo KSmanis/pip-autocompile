@@ -1,10 +1,54 @@
 from __future__ import annotations
 
+import re
 from pathlib import Path
+from typing import TYPE_CHECKING
 
 import pytest
 
+from pipautocompile.io import file_contains_pattern
 from pipautocompile.io import find_spec_files
+
+if TYPE_CHECKING:
+    from typing import Any
+
+
+@pytest.mark.parametrize(
+    argnames=("contents", "pattern", "kwargs", "expected"),
+    argvalues=(
+        (None, r"", {}, False),
+        ("", r"", {}, False),
+        ("foo", r"", {}, True),
+        ("", r"foo", {}, False),
+        ("foo\nbar", r"foo", {}, True),
+        ("foo\nbar", r"^foo", {}, True),
+        ("foo\nbar", r"foo$", {}, True),
+        ("foo\nbar", r"^foo$", {}, True),
+        ("foo\nbar", r"bar", {}, True),
+        ("foo\nbar", r"^bar", {}, True),
+        ("foo\nbar", r"bar$", {}, True),
+        ("foo\nbar", r"^bar$", {}, True),
+        ("foo\nbar", r"foo\nbar", {}, False),
+        ("foo\nbar", r"FoO", {"flags": re.IGNORECASE}, True),
+        ("FROM python:alpine AS build-deps", r"^FROM \S+ AS build-deps$", {}, True),
+        ("from python:alpine as build-deps", r"^FROM \S+ AS build-deps$", {}, False),
+        ("FROM  python:alpine  AS  build-deps", r"^FROM \S+ AS build-deps$", {}, False),
+        ("FROM python:alpine AS build", r"^FROM \S+ AS build-deps$", {}, False),
+        ("FROM python:alpine AS build-deps", r"^FROM \S+ AS build$", {}, False),
+    ),
+    ids=lambda argvalue: repr(argvalue),
+)
+def test_file_contains_pattern(
+    tmp_path: Path,
+    contents: str | None,
+    pattern: str,
+    kwargs: dict[str, Any],
+    expected: bool,
+) -> None:
+    file = tmp_path / "f"
+    if contents is not None:
+        file.write_text(contents)
+    assert file_contains_pattern(file, pattern, **kwargs) == expected
 
 
 @pytest.fixture
