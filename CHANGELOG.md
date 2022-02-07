@@ -2,6 +2,16 @@
 
 <!--next-version-placeholder-->
 
+## v0.7.0 (2022-02-07)
+### Feature
+* Add `--spec-pattern` CLI option ([`3e47052`](https://github.com/KSmanis/pip-autocompile/commit/3e470523c5ce57538ba83fa7ea9946565f55a99a))
+
+### Fix
+* **deps:** Update dependency python-on-whales to ^0.36.0 ([`8cf2f34`](https://github.com/KSmanis/pip-autocompile/commit/8cf2f34edbcbd9a27ff1fe54cf0f826af5cccf90))
+
+### Documentation
+* Add example for Docker with SSH agent passthrough ([`b1e85bb`](https://github.com/KSmanis/pip-autocompile/commit/b1e85bb1805538afe897f8dabeb16db3bd114620))
+
 ## v0.6.1 (2022-01-16)
 ### Fix
 * **release:** Fix build command ([`f24f16c`](https://github.com/KSmanis/pip-autocompile/commit/f24f16cf60c5cafa9170ff2da4dcd99fb2aab260))
