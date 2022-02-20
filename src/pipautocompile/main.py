@@ -11,7 +11,7 @@ from typing import TYPE_CHECKING
 import click
 from python_on_whales import docker
 
-from pipautocompile.git import inside_submodule
+from pipautocompile.git import working_tree
 from pipautocompile.io import file_contains_pattern
 from pipautocompile.io import find_spec_files
 from pipautocompile.logging import info
@@ -69,9 +69,14 @@ def cli(
         "CUSTOM_COMPILE_COMMAND": quote_args("pip-autocompile", *sys.argv[1:])
     }
 
+    initial_working_tree = working_tree()
     spec_files = sorted({f for p in spec_pattern for f in find_spec_files(p)})
     for spec_dir, specs in groupby(spec_files, key=lambda s: s.parent):
-        if not git_recurse_submodules and inside_submodule(spec_dir):
+        if (
+            not git_recurse_submodules
+            and initial_working_tree is not None
+            and initial_working_tree != working_tree(spec_dir)
+        ):
             continue
 
         info(f"Processing {spec_dir} directory...")

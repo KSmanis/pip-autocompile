@@ -1,20 +1,14 @@
 from __future__ import annotations
 
-import subprocess  # nosec
-from typing import TYPE_CHECKING
+from pathlib import Path
 
-if TYPE_CHECKING:
-    from _typeshed import StrOrBytesPath
+import pygit2
 
 
-def inside_submodule(path: StrOrBytesPath | None = None) -> bool:
+def working_tree(path: Path = Path()) -> Path | None:
     try:
-        output = subprocess.check_output(  # nosec
-            ("git", "rev-parse", "--show-superproject-working-tree"),
-            cwd=path,
-            stderr=subprocess.DEVNULL,
-        )
-    except (FileNotFoundError, subprocess.CalledProcessError):
-        return False
-    else:
-        return output != b""
+        return Path(pygit2.Repository(path).workdir)
+    except (pygit2.GitError, TypeError):
+        # `GitError`: `path` does not contain a Git repository
+        # `TypeError`: `path` contains a bare Git repository
+        return None

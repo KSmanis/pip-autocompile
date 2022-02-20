@@ -19,5 +19,3 @@ Automate pip-compile for multiple environments.
 
 - [pip-tools](https://github.com/jazzband/pip-tools): Compile requirements
   locally
-- [Git](https://git-scm.com/) >= 2.13: Skip Git submodules when
-  `--no-git-recurse-submodules`
