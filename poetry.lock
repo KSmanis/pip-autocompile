@@ -184,6 +184,35 @@ python-versions = ">=3.6"
 pyparsing = ">=2.0.2,<3.0.5 || >3.0.5"
 
 [[package]]
+name = "pep517"
+version = "0.12.0"
+description = "Wrappers to build Python packages using PEP 517 hooks"
+category = "dev"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+importlib_metadata = {version = "*", markers = "python_version < \"3.8\""}
+tomli = {version = ">=1.1.0", markers = "python_version >= \"3.6\""}
+zipp = {version = "*", markers = "python_version < \"3.8\""}
+
+[[package]]
+name = "pip-tools"
+version = "6.5.1"
+description = "pip-tools keeps your pinned dependencies fresh."
+category = "dev"
+optional = false
+python-versions = ">=3.7"
+
+[package.dependencies]
+click = ">=7"
+pep517 = "*"
+
+[package.extras]
+coverage = ["pytest-cov"]
+testing = ["pytest", "pytest-rerunfailures", "pytest-xdist"]
+
+[[package]]
 name = "platformdirs"
 version = "2.4.1"
 description = "A small Python module for determining appropriate platform-specific dirs, e.g. a \"user data dir\"."
@@ -470,7 +499,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "2d19141d56c899eafda73d52af218f442f2225b469b2e08b1ac107d8a6e28107"
+content-hash = "6507e4c239658b9816f6f98e579b6d7629956f658daa6645b7588733498eccc5"
 
 [metadata.files]
 atomicwrites = [
@@ -631,6 +660,14 @@ nodeenv = [
 packaging = [
     {file = "packaging-21.3-py3-none-any.whl", hash = "sha256:ef103e05f519cdc783ae24ea4e2e0f508a9c99b2d4969652eed6a2e1ea5bd522"},
     {file = "packaging-21.3.tar.gz", hash = "sha256:dd47c42927d89ab911e606518907cc2d3a1f38bbd026385970643f9c5b8ecfeb"},
+]
+pep517 = [
+    {file = "pep517-0.12.0-py2.py3-none-any.whl", hash = "sha256:dd884c326898e2c6e11f9e0b64940606a93eb10ea022a2e067959f3a110cf161"},
+    {file = "pep517-0.12.0.tar.gz", hash = "sha256:931378d93d11b298cf511dd634cf5ea4cb249a28ef84160b3247ee9afb4e8ab0"},
+]
+pip-tools = [
+    {file = "pip-tools-6.5.1.tar.gz", hash = "sha256:80f562aa699fc76a424539697e0bef41e490a050e57a6a21468531981a9d419e"},
+    {file = "pip_tools-6.5.1-py3-none-any.whl", hash = "sha256:80f1cfc7156e4a4465b1a46a6bb3599587909537db1a149cf3a6b73eed979ee4"},
 ]
 platformdirs = [
     {file = "platformdirs-2.4.1-py3-none-any.whl", hash = "sha256:1d7385c7db91728b83efd0ca99a5afb296cab9d0ed8313a45ed8ba17967ecfca"},
