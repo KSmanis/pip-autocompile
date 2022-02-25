@@ -25,4 +25,6 @@ jobs:
           poetry install --ansi -v
       - name: Run pytest
         run: |
-          poetry run pytest --color=yes
+          poetry run pytest --color=yes --cov-report=xml
+      - name: Upload coverage report
+        uses: codecov/codecov-action@v2.1.0
