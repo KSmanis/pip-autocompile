@@ -5,11 +5,12 @@ on: [push, pull_request]
 
 jobs:
   gitlint:
-    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
       - name: Set up Python
         uses: actions/setup-python@v2
       - name: Install gitlint
