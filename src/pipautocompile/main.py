@@ -89,7 +89,9 @@ def cli(
         )
         if has_build_stage:
             info("Building Docker image...")
-            image = docker.build(target=docker_build_stage, context_path=build_dir)
+            image = docker.build(
+                load=True, target=docker_build_stage, context_path=build_dir
+            )
 
             container_env: dict[str, str] = {}
             container_volumes: list[VolumeDefinition] = [
@@ -115,12 +117,13 @@ def cli(
             ) as container:  # type: ignore[union-attr]
                 info("Creating venv...")
                 container.execute(
-                    tty=True, command=["python", "-m", "venv", "--clear", "/app/venv/"]
+                    tty=sys.stdout.isatty(),
+                    command=["python", "-m", "venv", "--clear", "/app/venv/"],
                 )
 
                 info("Upgrading core dependencies...")
                 container.execute(
-                    tty=True,
+                    tty=sys.stdout.isatty(),
                     command=[
                         "/app/venv/bin/pip",
                         "install",
@@ -132,7 +135,8 @@ def cli(
 
                 info("Installing pip-tools...")
                 container.execute(
-                    tty=True, command=["/app/venv/bin/pip", "install", "pip-tools"]
+                    tty=sys.stdout.isatty(),
+                    command=["/app/venv/bin/pip", "install", "pip-tools"],
                 )
 
                 info("Copying specs...")
@@ -144,7 +148,7 @@ def cli(
                     container_spec = container_spec_dir / spec.name
                     container.execute(
                         envs=pip_compile_env,
-                        tty=True,
+                        tty=sys.stdout.isatty(),
                         workdir=container_spec_dir,
                         command=[
                             "/app/venv/bin/pip-compile",

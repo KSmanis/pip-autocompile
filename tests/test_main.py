@@ -1,10 +1,12 @@
 from __future__ import annotations
 
 import shutil
+import sys
 from typing import TYPE_CHECKING
 
 import pytest
 from click.testing import CliRunner
+from python_on_whales import docker
 
 from pipautocompile.main import cli
 
@@ -34,6 +36,18 @@ def pip_compile_path(noop_path: Path) -> Path:
     return noop_path
 
 
+@pytest.fixture
+def dockerfile_contents() -> str:
+    return "FROM python:alpine AS build-deps\n"
+
+
+@pytest.fixture
+def docker_path(pip_compile_path: Path, dockerfile_contents: str) -> Path:
+    (pip_compile_path / "nested" / "Dockerfile").write_text(dockerfile_contents)
+    (pip_compile_path / "Dockerfile").write_text(dockerfile_contents)
+    return pip_compile_path
+
+
 @pytest.mark.usefixtures("noop_path")
 def test_cli_noop(runner: CliRunner) -> None:
     result = runner.invoke(cli)
@@ -55,3 +69,19 @@ def test_cli_pip_compile(runner: CliRunner, pip_compile_path: Path) -> None:
     assert (pip_compile_path / "nested" / "requirements.txt").is_file()
     assert (pip_compile_path / "nested" / "requirements" / "foo.txt").is_file()
     assert (pip_compile_path / "nested" / "requirements" / "bar.txt").is_file()
+
+
+@pytest.mark.skipif(sys.platform == "win32", reason="requires Linux containers")
+def test_cli_docker(runner: CliRunner, docker_path: Path) -> None:
+    if docker.system.info().server_version is None:
+        pytest.skip("Missing Docker daemon")
+
+    result = runner.invoke(cli)
+    assert not result.exception
+    assert result.exit_code == 0
+    assert "Processing . directory...\n" in result.output
+    assert (docker_path / "requirements.txt").is_file()
+    assert "Processing nested directory...\n" in result.output
+    assert (docker_path / "nested" / "requirements.txt").is_file()
+    assert (docker_path / "nested" / "requirements" / "foo.txt").is_file()
+    assert (docker_path / "nested" / "requirements" / "bar.txt").is_file()
