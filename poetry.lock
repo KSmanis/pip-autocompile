@@ -349,7 +349,7 @@ testing = ["fields", "hunter", "process-tests", "six", "pytest-xdist", "virtuale
 
 [[package]]
 name = "python-on-whales"
-version = "0.36.1"
+version = "0.37.0"
 description = "A Docker client for Python, designed to be fun and intuitive!"
 category = "main"
 optional = false
@@ -499,7 +499,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "6507e4c239658b9816f6f98e579b6d7629956f658daa6645b7588733498eccc5"
+content-hash = "44a235023bd50725547fca78decc11e53f10807959bc14b87c7415d447aa03f8"
 
 [metadata.files]
 atomicwrites = [
@@ -771,8 +771,8 @@ pytest-cov = [
     {file = "pytest_cov-3.0.0-py3-none-any.whl", hash = "sha256:578d5d15ac4a25e5f961c938b85a05b09fdaae9deef3bb6de9a6e766622ca7a6"},
 ]
 python-on-whales = [
-    {file = "python-on-whales-0.36.1.tar.gz", hash = "sha256:d76907f4af335a845c938e0fb80dbc45c7a7f438da8f091d13738e87c889d8ce"},
-    {file = "python_on_whales-0.36.1-py3-none-any.whl", hash = "sha256:f5719c7f7650a97313cfe5043bc8bf4782c66f4bbb8534cc430980a995d640b6"},
+    {file = "python-on-whales-0.37.0.tar.gz", hash = "sha256:91290a980da5aeb63098c2d104f9f6fa01410267ad9c09224edfcae8137effe1"},
+    {file = "python_on_whales-0.37.0-py3-none-any.whl", hash = "sha256:5cd0b7395fb1f686c5f97126902617955ba74edceaced4b8b0c90f89dd436222"},
 ]
 pyyaml = [
     {file = "PyYAML-6.0-cp310-cp310-macosx_10_9_x86_64.whl", hash = "sha256:d4db7c7aef085872ef65a8fd7d6d09a14ae91f691dec3e87ee5ee0539d516f53"},
