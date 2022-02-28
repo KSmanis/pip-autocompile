@@ -29,6 +29,8 @@ pre-commit = "^2.16.0"
 # test
 pip-tools = "^6.5.1"
 pytest-cov = "^3.0.0"
+# types
+mypy = "^0.931"
 
 [tool.poetry.scripts]
 pip-autocompile = "pipautocompile.main:cli"
@@ -54,6 +56,10 @@ no_implicit_optional = true
 show_error_codes = true
 warn_return_any = true
 warn_unused_ignores = true
+
+[[tool.mypy.overrides]]
+module = "pygit2"
+ignore_missing_imports = true
 
 [tool.pytest.ini_options]
 addopts = "--cov=src --cov-branch"

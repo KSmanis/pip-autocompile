@@ -22,7 +22,7 @@ if TYPE_CHECKING:
 
 
 @click.command(context_settings={"help_option_names": ["-h", "--help"]})
-@click.version_option(package_name="pip-autocompile")  # type: ignore
+@click.version_option(package_name="pip-autocompile")
 @click.option(
     "--docker-build-stage",
     help="Docker build stage to search for.",

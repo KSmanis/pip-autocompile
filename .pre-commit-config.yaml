@@ -72,14 +72,13 @@ repos:
     hooks:
       - id: pyupgrade
         args: ["--py37-plus"]
-  - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v0.931
+  - repo: local
     hooks:
       - id: mypy
-        additional_dependencies:
-          - pytest
-          - python-on-whales
-          - types-click
+        name: mypy
+        language: system
+        entry: mypy
+        types_or: ["pyi", "python"]
   - repo: https://github.com/asottile/yesqa
     rev: v1.3.0
     hooks:

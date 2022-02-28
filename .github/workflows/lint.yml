@@ -27,9 +27,19 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v2
       - name: Set up Python
+        id: setup-python
         uses: actions/setup-python@v3
+      - name: Install Poetry
+        run: pipx install poetry
+      - name: Install dependencies
+        run: poetry install --ansi
+      - name: Cache pre-commit hooks
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/pre-commit
+          key: python-${{ steps.setup-python.outputs.python-version }}-pre-commit-${{ hashFiles('.pre-commit-config.yaml') }}
       - name: Run pre-commit
-        uses: pre-commit/action@v2.0.3
+        run: poetry run pre-commit run --all-files --color=always --show-diff-on-failure
 
   super-linter:
     runs-on: ubuntu-latest
