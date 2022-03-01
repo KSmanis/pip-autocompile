@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.7.1 (2022-03-01)
+### Fix
+* **deps:** Update dependency python-on-whales to ^0.37.0 ([`cf88aa3`](https://github.com/KSmanis/pip-autocompile/commit/cf88aa328e720aea36b46429107b746df099f162))
+
 ## v0.7.0 (2022-02-07)
 ### Feature
 * Add `--spec-pattern` CLI option ([`3e47052`](https://github.com/KSmanis/pip-autocompile/commit/3e470523c5ce57538ba83fa7ea9946565f55a99a))
