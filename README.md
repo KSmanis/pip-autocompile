@@ -1,7 +1,6 @@
 # pip-autocompile
 
-[![lint](https://github.com/KSmanis/pip-autocompile/workflows/lint/badge.svg)](https://github.com/KSmanis/pip-autocompile/actions?workflow=lint)
-[![test](https://github.com/KSmanis/pip-autocompile/workflows/test/badge.svg)](https://github.com/KSmanis/pip-autocompile/actions?workflow=test)
+[![build](https://github.com/KSmanis/pip-autocompile/actions/workflows/build.yml/badge.svg)](https://github.com/KSmanis/pip-autocompile/actions/workflows/build.yml)
 [![PyPI version](https://img.shields.io/pypi/v/pip-autocompile.svg)](https://pypi.org/project/pip-autocompile/)
 [![pre-commit enabled](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
 [![Renovate enabled](https://img.shields.io/badge/renovate-enabled-brightgreen.svg)](https://renovatebot.com/)
