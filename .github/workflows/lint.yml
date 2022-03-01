@@ -7,24 +7,23 @@ jobs:
   gitlint:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out code
+      - name: Check out repository
         uses: actions/checkout@v2
         with:
           fetch-depth: 2
       - name: Set up Python
         uses: actions/setup-python@v3
-      - name: Install gitlint
-        run: |
-          python -m pip install --upgrade pip
-          python -m pip install gitlint
+      - name: Install Poetry
+        run: pipx install poetry
+      - name: Install dependencies
+        run: poetry install --ansi
       - name: Run gitlint
-        run: |
-          gitlint
+        run: poetry run gitlint
 
   pre-commit:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out code
+      - name: Check out repository
         uses: actions/checkout@v2
       - name: Set up Python
         id: setup-python
@@ -44,7 +43,7 @@ jobs:
   super-linter:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out code
+      - name: Check out repository
         uses: actions/checkout@v2
         with:
           fetch-depth: 0

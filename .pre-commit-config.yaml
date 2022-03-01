@@ -18,10 +18,14 @@ repos:
     hooks:
       - id: hadolint-docker
   # Git
-  - repo: https://github.com/jorisroovers/gitlint
-    rev: v0.17.0
+  - repo: local
     hooks:
       - id: gitlint
+        name: gitlint
+        language: system
+        entry: gitlint
+        args: ["--staged", "--msg-filename"]
+        stages: ["commit-msg"]
   # GitHub Actions
   - repo: https://github.com/rhysd/actionlint
     rev: v1.6.9
