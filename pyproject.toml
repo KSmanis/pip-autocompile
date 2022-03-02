@@ -68,6 +68,7 @@ testpaths = ["tests"]
 
 [tool.semantic_release]
 build_command = "pip install poetry && poetry build"
+commit_subject = "build: release v{version}"
 version_toml = ["pyproject.toml:tool.poetry.version"]
 
 [build-system]
