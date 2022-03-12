@@ -78,14 +78,6 @@ jobs:
         run: pipx install poetry
       - name: Install dependencies
         run: poetry install --ansi
-      - name: Set up Docker
-        if: matrix.os == 'macos-latest'
-        run: |
-          # https://github.com/docker/for-mac/issues/2359#issuecomment-943131345
-          brew install --cask docker
-          sudo /Applications/Docker.app/Contents/MacOS/Docker --unattended --install-privileged-components
-          open -a /Applications/Docker.app --args --unattended --accept-license
-          while ! /Applications/Docker.app/Contents/Resources/bin/docker info &>/dev/null; do sleep 1; done
       - name: Run pytest
         run: poetry run pytest --color=yes --cov-report=term --cov-report=xml
       - name: Upload coverage report

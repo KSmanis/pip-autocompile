@@ -71,7 +71,7 @@ def test_cli_pip_compile(runner: CliRunner, pip_compile_path: Path) -> None:
     assert (pip_compile_path / "nested" / "requirements" / "bar.txt").is_file()
 
 
-@pytest.mark.skipif(sys.platform == "win32", reason="requires Linux containers")
+@pytest.mark.skipif(sys.platform != "linux", reason="requires Linux containers")
 def test_cli_docker(runner: CliRunner, docker_path: Path) -> None:
     if docker.system.info().server_version is None:
         pytest.skip("Missing Docker daemon")
