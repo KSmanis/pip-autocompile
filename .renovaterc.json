@@ -3,5 +3,13 @@
   "extends": [
     "KSmanis/renovate-config"
   ],
+  "packageRules": [
+    {
+      "automerge": true,
+      "matchDepTypes": [
+        "devDependencies"
+      ]
+    }
+  ],
   "semanticCommits": "enabled"
 }
