@@ -7,7 +7,7 @@
     {
       "automerge": true,
       "matchDepTypes": [
-        "devDependencies"
+        "dev-dependencies"
       ]
     }
   ],
