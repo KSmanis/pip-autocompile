@@ -12,7 +12,7 @@ jobs:
         with:
           fetch-depth: 2
       - name: Set up Python
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v4
       - name: Install Poetry
         run: pipx install poetry
       - name: Install dependencies
@@ -27,7 +27,7 @@ jobs:
         uses: actions/checkout@v3
       - name: Set up Python
         id: setup-python
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v4
       - name: Install Poetry
         run: pipx install poetry
       - name: Install dependencies
@@ -76,7 +76,7 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v3
       - name: Set up Python
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
       - name: Install Poetry
