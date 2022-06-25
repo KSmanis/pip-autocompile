@@ -62,7 +62,10 @@ def runner() -> CliRunner:
     ids=lambda argvalue: repr(argvalue),
 )
 def test_info(
-    runner: CliRunner, args: tuple, kwargs: dict[str, Any], expected: dict[str, bytes]
+    runner: CliRunner,
+    args: tuple[Any, ...],
+    kwargs: dict[str, Any],
+    expected: dict[str, bytes],
 ) -> None:
     with runner.isolation(color=True) as (out, err):
         info(*args, **kwargs)

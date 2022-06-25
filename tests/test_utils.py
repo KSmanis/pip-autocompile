@@ -1,8 +1,13 @@
 from __future__ import annotations
 
+from typing import TYPE_CHECKING
+
 import pytest
 
 from pipautocompile.utils import quote_args
+
+if TYPE_CHECKING:
+    from typing import Any
 
 
 @pytest.mark.parametrize(
@@ -31,5 +36,5 @@ from pipautocompile.utils import quote_args
     ),
     ids=lambda argvalue: repr(argvalue),
 )
-def test_quote_args(args: tuple, expected: str) -> None:
+def test_quote_args(args: tuple[Any, ...], expected: str) -> None:
     assert quote_args(*args) == expected
