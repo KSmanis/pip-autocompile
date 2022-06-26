@@ -16,6 +16,10 @@ classifiers = [
 packages = [
     { include = "pipautocompile", from = "src" }
 ]
+include = [
+    { path = "examples", format = "sdist" },
+    { path = "tests", format = "sdist" },
+]
 
 [tool.poetry.dependencies]
 python = "^3.7"
