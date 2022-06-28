@@ -28,7 +28,7 @@ repos:
         stages: ["commit-msg"]
   # GitHub Actions
   - repo: https://github.com/rhysd/actionlint
-    rev: v1.6.14
+    rev: v1.6.15
     hooks:
       - id: actionlint-docker
   # JSON
