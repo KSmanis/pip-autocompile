@@ -10,6 +10,31 @@ if TYPE_CHECKING:
     from typing import Callable
 
 
+def pytest_addoption(parser: pytest.Parser) -> None:
+    parser.addoption(
+        "--with-functional",
+        action="store_true",
+        default=False,
+        help="run functional tests",
+    )
+
+
+def pytest_configure(config: pytest.Config) -> None:
+    config.addinivalue_line("markers", "functional: mark functional tests")
+
+
+def pytest_collection_modifyitems(
+    config: pytest.Config, items: list[pytest.Item]
+) -> None:
+    if not config.getoption("--with-functional"):
+        skip_functional = pytest.mark.skip(
+            reason="needs --with-functional option to run"
+        )
+        for item in items:
+            if "functional" in item.keywords:
+                item.add_marker(skip_functional)
+
+
 @pytest.fixture
 def git_identity() -> pygit2.Signature:  # type: ignore[no-any-unimported]
     return pygit2.Signature("Peurp Ovic", "peurp@ovic.com")

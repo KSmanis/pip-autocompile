@@ -16,6 +16,8 @@ if TYPE_CHECKING:
 
     import pygit2
 
+pytestmark = pytest.mark.functional
+
 
 @pytest.fixture
 def runner() -> CliRunner:
