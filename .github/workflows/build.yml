@@ -90,7 +90,7 @@ jobs:
       - name: Run pytest
         run: poetry run pytest --color=yes --cov-report=term --cov-report=xml --with-functional
       - name: Upload coverage report
-        uses: codecov/codecov-action@v3.1.0
+        uses: codecov/codecov-action@v3.1.1
 
   release:
     if: github.ref == 'refs/heads/master'
