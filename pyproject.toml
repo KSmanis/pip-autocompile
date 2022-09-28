@@ -33,7 +33,7 @@ gitlint = "^0.17.0"
 pre-commit = "^2.16.0"
 # test
 pip-tools = "^6.6.2"
-pytest-cov = "^3.0.0"
+pytest-cov = "^4.0.0"
 # types
 mypy = "^0.981"
 
