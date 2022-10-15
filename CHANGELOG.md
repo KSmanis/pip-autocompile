@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.7.5 (2022-10-15)
+### Fix
+* **deps:** Update dependencies ([`2aa0ac3`](https://github.com/KSmanis/pip-autocompile/commit/2aa0ac364cd375087c095964458e8e75a85682c8))
+
 ## v0.7.4 (2022-03-25)
 ### Fix
 * **deps:** Update dependency python-on-whales to ^0.40.0 ([`030380b`](https://github.com/KSmanis/pip-autocompile/commit/030380b5795bfbd112170026624d8e6e520e91e5))
