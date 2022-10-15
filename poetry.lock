@@ -133,17 +133,6 @@ docs = ["furo (>=2021.8.17b43)", "sphinx (>=4.1)", "sphinx-autodoc-typehints (>=
 testing = ["covdefaults (>=1.2.0)", "coverage (>=4)", "pytest (>=4)", "pytest-cov", "pytest-timeout (>=1.4.2)"]
 
 [[package]]
-name = "gitlint"
-version = "0.17.0"
-description = "Git commit message linter written in python, checks your commit messages for style."
-category = "dev"
-optional = false
-python-versions = ">=3.6"
-
-[package.dependencies]
-gitlint-core = {version = "0.17.0", extras = ["trusted-deps"]}
-
-[[package]]
 name = "gitlint-core"
 version = "0.17.0"
 description = "Git commit message linter written in python, checks your commit messages for style."
@@ -152,18 +141,9 @@ optional = false
 python-versions = ">=3.6"
 
 [package.dependencies]
-arrow = [
-    {version = ">=1"},
-    {version = "1.2.1", optional = true, markers = "extra == \"trusted-deps\""},
-]
-Click = [
-    {version = ">=8"},
-    {version = "8.0.3", optional = true, markers = "extra == \"trusted-deps\""},
-]
-sh = [
-    {version = ">=1.13.0", markers = "sys_platform != \"win32\""},
-    {version = "1.14.2", optional = true, markers = "sys_platform != \"win32\""},
-]
+arrow = ">=1"
+Click = ">=8"
+sh = {version = ">=1.13.0", markers = "sys_platform != \"win32\""}
 
 [package.extras]
 trusted-deps = ["Click (==8.0.3)", "arrow (==1.2.1)", "sh (==1.14.2)"]
@@ -637,7 +617,7 @@ testing = ["func-timeout", "jaraco.itertools", "pytest (>=6)", "pytest-black (>=
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "9874366a806c65c7449d06a21ad30f082987a2676522015b734680591dd08a16"
+content-hash = "e109c640ddda1bf085c944107d8798fee7ceae91ab1b2993dfb0d2d1eb9e0fea"
 
 [metadata.files]
 arrow = [
@@ -778,10 +758,6 @@ distlib = [
 filelock = [
     {file = "filelock-3.4.2-py3-none-any.whl", hash = "sha256:cf0fc6a2f8d26bd900f19bf33915ca70ba4dd8c56903eeb14e1e7a2fd7590146"},
     {file = "filelock-3.4.2.tar.gz", hash = "sha256:38b4f4c989f9d06d44524df1b24bd19e167d851f19b50bf3e3559952dddc5b80"},
-]
-gitlint = [
-    {file = "gitlint-0.17.0-py2.py3-none-any.whl", hash = "sha256:46469d5db3f3bca72fa946c159d0733dc8c75211309477676295cf2d80d177b4"},
-    {file = "gitlint-0.17.0.tar.gz", hash = "sha256:8c10c6b404d255b43ddc4a2f5f13bcb10284bc162adfb2c03b10708309009189"},
 ]
 gitlint-core = [
     {file = "gitlint-core-0.17.0.tar.gz", hash = "sha256:772dfd33effaa8515ca73e901466aa938c19ced894bec6783d19691f57429691"},

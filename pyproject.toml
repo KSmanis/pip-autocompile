@@ -28,7 +28,7 @@ pygit2 = "^1.9.0"
 python-on-whales = "^0.40.0"
 
 [tool.poetry.group.lint.dependencies]
-gitlint = "^0.17.0"
+gitlint-core = "^0.17.0"
 pre-commit = "^2.16.0"
 mypy = "^0.982"
 
