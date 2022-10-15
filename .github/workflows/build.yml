@@ -18,7 +18,7 @@ jobs:
       - name: Install Poetry
         run: pipx install poetry
       - name: Install dependencies
-        run: poetry install -v
+        run: poetry install --only=lint --no-root -v
       - name: Run gitlint
         run: poetry run gitlint
 
@@ -86,7 +86,7 @@ jobs:
       - name: Install Poetry
         run: pipx install poetry
       - name: Install dependencies
-        run: poetry install -v
+        run: poetry install --only=main,test -v
       - name: Run pytest
         run: poetry run pytest --color=yes --cov-report=term --cov-report=xml --with-functional
       - name: Upload coverage report
