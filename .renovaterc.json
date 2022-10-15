@@ -8,7 +8,8 @@
       "automerge": true,
       "automergeType": "branch",
       "matchDepTypes": [
-        "dev-dependencies"
+        "lint",
+        "test"
       ]
     }
   ],
