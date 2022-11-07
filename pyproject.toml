@@ -30,7 +30,7 @@ python-on-whales = "^0.52.0"
 [tool.poetry.group.lint.dependencies]
 gitlint-core = "^0.17.0"
 pre-commit = "^2.20.0"
-mypy = "^0.982"
+mypy = "^0.990"
 
 [tool.poetry.group.test.dependencies]
 pip-tools = "^6.9.0"
