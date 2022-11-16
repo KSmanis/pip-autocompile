@@ -4,25 +4,13 @@ name: build
 on: [push, pull_request]
 
 jobs:
-  gitlint:
+  pre-commit:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
         uses: actions/checkout@v3
         with:
           fetch-depth: 2
-      - name: Install Poetry
-        run: pipx install poetry
-      - name: Install dependencies
-        run: poetry install --only=lint --no-root -v
-      - name: Run gitlint
-        run: poetry run gitlint
-
-  pre-commit:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out repository
-        uses: actions/checkout@v3
       - name: Install Poetry
         run: pipx install poetry
       - name: Install dependencies
@@ -37,6 +25,8 @@ jobs:
       - name: Prune pre-commit hooks
         if: steps.cache-pre-commit.outputs.cache-hit != 'true'
         run: poetry run pre-commit gc
+      - name: Run gitlint
+        run: poetry run pre-commit run --hook-stage manual gitlint-ci
       - name: Run pre-commit
         run: poetry run pre-commit run --all-files --color=always --show-diff-on-failure
 
@@ -94,7 +84,7 @@ jobs:
 
   release:
     if: github.ref == 'refs/heads/master'
-    needs: [gitlint, pre-commit, super-linter, pytest]
+    needs: [pre-commit, super-linter, pytest]
     runs-on: ubuntu-latest
     concurrency: release
     steps:
