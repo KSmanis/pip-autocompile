@@ -28,6 +28,7 @@ jobs:
       - name: Run gitlint
         run: poetry run pre-commit run --hook-stage manual gitlint-ci
       - name: Run pre-commit
+        if: success() || failure()
         run: poetry run pre-commit run --all-files --color=always --show-diff-on-failure
 
   super-linter:
