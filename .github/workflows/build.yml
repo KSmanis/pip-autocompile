@@ -26,7 +26,7 @@ jobs:
         if: steps.cache-pre-commit.outputs.cache-hit != 'true'
         run: poetry run pre-commit gc
       - name: Run gitlint
-        run: poetry run pre-commit run --hook-stage manual gitlint-ci
+        run: poetry run pre-commit run --color=always --hook-stage manual gitlint-ci
       - name: Run pre-commit
         if: success() || failure()
         run: poetry run pre-commit run --all-files --color=always --show-diff-on-failure
