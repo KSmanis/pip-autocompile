@@ -52,7 +52,7 @@ repos:
         exclude: "^CHANGELOG.md$"
   # Python
   - repo: https://github.com/PyCQA/isort
-    rev: 5.11.2
+    rev: v5.11.3
     hooks:
       - id: isort
   - repo: https://github.com/psf/black
