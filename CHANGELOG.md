@@ -2,6 +2,14 @@
 
 <!--next-version-placeholder-->
 
+## v0.7.6 (2022-12-28)
+### Fix
+* **deps:** Bump dependencies ([`5209a51`](https://github.com/KSmanis/pip-autocompile/commit/5209a514e5e3715db55360aaf19dcbb92e5445df))
+
+### Documentation
+* **README:** Add SonarCloud quality gate badge ([`abd5854`](https://github.com/KSmanis/pip-autocompile/commit/abd5854882283c221676913db30227ce0d9c4775))
+* **README:** Remove Code Climate badge ([`1bd7fdd`](https://github.com/KSmanis/pip-autocompile/commit/1bd7fdd9febec8ceaf5e6fe6c1bb58bb55c86880))
+
 ## v0.7.5 (2022-10-15)
 ### Fix
 * **deps:** Update dependencies ([`2aa0ac3`](https://github.com/KSmanis/pip-autocompile/commit/2aa0ac364cd375087c095964458e8e75a85682c8))
