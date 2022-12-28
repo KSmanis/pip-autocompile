@@ -28,14 +28,14 @@ pygit2 = [
     { version = "~1.10.1", python = "~3.7" },
     { version = "^1.11.1", python = "^3.8" },
 ]
-python-on-whales = "^0.52.0"
+python-on-whales = "^0.55.0"
 
 [tool.poetry.group.lint.dependencies]
-pre-commit = "^2.20.0"
+pre-commit = "^2.21.0"
 mypy = "^0.991"
 
 [tool.poetry.group.test.dependencies]
-pip-tools = "^6.9.0"
+pip-tools = "^6.12.1"
 pytest-cov = "^4.0.0"
 
 [tool.poetry.scripts]
