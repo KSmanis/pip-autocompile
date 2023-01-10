@@ -86,6 +86,6 @@ repos:
       - id: yesqa
   # YAML
   - repo: https://github.com/adrienverge/yamllint
-    rev: v1.28.0
+    rev: v1.29.0
     hooks:
       - id: yamllint
