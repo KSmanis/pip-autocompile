@@ -569,6 +569,25 @@ pyyaml = ">=5.1"
 virtualenv = ">=20.10.0"
 
 [[package]]
+name = "pre-commit"
+version = "3.0.0"
+description = "A framework for managing and maintaining multi-language pre-commit hooks."
+category = "dev"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "pre_commit-3.0.0-py2.py3-none-any.whl", hash = "sha256:6af0a0b4137c0903794632f77b7223c4af0373f5cd3337056d2dab32aa3a5caf"},
+    {file = "pre_commit-3.0.0.tar.gz", hash = "sha256:de265f74325f0c3ff1a727a974449315ea9b11975cf6b02c11f26e50acfa48f1"},
+]
+
+[package.dependencies]
+cfgv = ">=2.0.0"
+identify = ">=1.0.0"
+nodeenv = ">=0.11.1"
+pyyaml = ">=5.1"
+virtualenv = ">=20.10.0"
+
+[[package]]
 name = "pycparser"
 version = "2.21"
 description = "C parser in Python"
@@ -1046,4 +1065,4 @@ testing = ["flake8 (<5)", "func-timeout", "jaraco.functools", "jaraco.itertools"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.7"
-content-hash = "7d662b900c25d0afe28d34718dcf7335ccd5b85e65818d1c7bf5c0b47e456576"
+content-hash = "cd8325cec6b79cee22f8337a7351ed4cbdf82db2d3b1e5d65418480a6913b8d1"
