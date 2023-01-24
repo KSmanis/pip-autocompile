@@ -31,7 +31,10 @@ pygit2 = [
 python-on-whales = "^0.55.0"
 
 [tool.poetry.group.lint.dependencies]
-pre-commit = "^2.21.0"
+pre-commit = [
+    { version = "~2.21.0", python = "~3.7" },
+    { version = "^3.0.0", python = "^3.8" },
+]
 mypy = "^0.991"
 
 [tool.poetry.group.test.dependencies]
