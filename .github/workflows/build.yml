@@ -77,7 +77,7 @@ jobs:
       - name: Upload coverage report
         uses: codecov/codecov-action@v3.1.1
       - name: Run SonarCloud scanner
-        uses: SonarSource/sonarcloud-github-action@v1.8
+        uses: SonarSource/sonarcloud-github-action@v1.9
         if: matrix.os == 'ubuntu-latest'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
