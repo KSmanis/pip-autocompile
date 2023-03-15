@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pip-autocompile"
-version = "0.7.6"
+version = "0.7.7"
 description = "Automate pip-compile for multiple environments."
 license = "MIT"
 authors = ["Konstantinos Smanis <konstantinos.smanis@gmail.com>"]
