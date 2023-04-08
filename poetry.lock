@@ -860,14 +860,14 @@ testing = ["fields", "hunter", "process-tests", "pytest-xdist", "six", "virtuale
 
 [[package]]
 name = "python-on-whales"
-version = "0.59.0"
+version = "0.60.0"
 description = "A Docker client for Python, designed to be fun and intuitive!"
 category = "main"
 optional = false
 python-versions = ">=3.7, <4"
 files = [
-    {file = "python-on-whales-0.59.0.tar.gz", hash = "sha256:d60c9c7c723a69a8d22038a4bede44e93b08ab2fbdbfec4e62cf3508c4f6501c"},
-    {file = "python_on_whales-0.59.0-py3-none-any.whl", hash = "sha256:0aaf447e78190f9085e2aa9dae6866d5038a4f6ac63a16d389f12df26e2ffcf4"},
+    {file = "python-on-whales-0.60.0.tar.gz", hash = "sha256:f7b725438b59d676b62bbdbf6acac41aa9d5036fb199df550e330b2f6c5d4989"},
+    {file = "python_on_whales-0.60.0-py3-none-any.whl", hash = "sha256:6e4f8efad2e6b306111d6ef01a1f420cce3d59245c9bf3c3d253fe12a59f92b1"},
 ]
 
 [package.dependencies]
@@ -1139,4 +1139,4 @@ testing = ["big-O", "flake8 (<5)", "jaraco.functools", "jaraco.itertools", "more
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.7"
-content-hash = "cb0312fed7d1dd62046b3d10e682f7b912926ff430429d18a2c6afc495dc7daf"
+content-hash = "1d64437e5ae4af129ea6596f8fc2272871db522c600fb71e50925f1eccd2868a"
