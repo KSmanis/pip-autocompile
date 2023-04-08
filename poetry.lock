@@ -541,14 +541,14 @@ files = [
 
 [[package]]
 name = "pip-tools"
-version = "6.12.3"
+version = "6.13.0"
 description = "pip-tools keeps your pinned dependencies fresh."
 category = "dev"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "pip-tools-6.12.3.tar.gz", hash = "sha256:480d44fae6e09fad3f9bd3d0a7e8423088715d10477e8ef0663440db25e3114f"},
-    {file = "pip_tools-6.12.3-py3-none-any.whl", hash = "sha256:8510420f46572b2e26c357541390593d9365eb6edd2d1e7505267910ecaec080"},
+    {file = "pip-tools-6.13.0.tar.gz", hash = "sha256:61d46bd2eb8016ed4a924e196e6e5b0a268cd3babd79e593048720db23522bb1"},
+    {file = "pip_tools-6.13.0-py3-none-any.whl", hash = "sha256:50943f151d87e752abddec8158622c34ad7f292e193836e90e30d87da60b19d9"},
 ]
 
 [package.dependencies]
