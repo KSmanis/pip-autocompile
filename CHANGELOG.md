@@ -2,6 +2,11 @@
 
 <!--next-version-placeholder-->
 
+## v0.7.8 (2023-05-30)
+### Fix
+
+* **deps:** Bump dependencies ([`39fcbb4`](https://github.com/KSmanis/pip-autocompile/commit/39fcbb496fea497b6c339565f93ab00006ecfdec))
+
 ## v0.7.7 (2023-03-15)
 ### Fix
 * **deps:** Bump dependencies ([`4646796`](https://github.com/KSmanis/pip-autocompile/commit/46467962495353547bb6b96b1dcec5f921db4ede))
