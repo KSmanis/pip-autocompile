@@ -80,5 +80,5 @@ commit_subject = "build: release v{version}"
 version_toml = ["pyproject.toml:tool.poetry.version"]
 
 [build-system]
-requires = ["poetry-core>=1.0.0"]
+requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
