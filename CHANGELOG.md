@@ -2,6 +2,16 @@
 
 <!--next-version-placeholder-->
 
+## v0.7.9 (2023-06-18)
+
+### Fix
+
+* **deps:** Bump dependencies ([`7f85421`](https://github.com/KSmanis/pip-autocompile/commit/7f854217707e5a044f9caac3fb85036dbe0d98f6))
+
+### Documentation
+
+* **README:** Update Renovate badge ([`e6a4c12`](https://github.com/KSmanis/pip-autocompile/commit/e6a4c12010a78352207999a17c8178fa92aeabd9))
+
 ## v0.7.8 (2023-05-30)
 ### Fix
 
