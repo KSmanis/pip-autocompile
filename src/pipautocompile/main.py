@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import os
-import subprocess  # nosec
+import subprocess
 import sys
 from itertools import groupby
 from pathlib import Path
@@ -162,8 +162,8 @@ def cli(
         else:
             for spec in specs:
                 info(f"Compiling {spec}...")
-                subprocess.check_call(  # nosec
-                    ("pip-compile", *pip_compile_args, spec.name),
+                subprocess.check_call(
+                    ("pip-compile", *pip_compile_args, spec.name),  # noqa: S603
                     cwd=spec_dir,
                     env={**os.environ, **pip_compile_env},
                 )
