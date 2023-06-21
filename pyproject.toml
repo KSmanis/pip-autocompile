@@ -8,9 +8,11 @@ exclude_lines = [
   "pragma: no cover",
 ]
 show_missing = true
+skip_covered = true
 skip_empty = true
 
 [tool.coverage.run]
+branch = true
 relative_files = true
 
 [tool.mypy]
@@ -72,7 +74,7 @@ pytest-cov = "^4.1.0"
 pip-autocompile = "pipautocompile.main:cli"
 
 [tool.pytest.ini_options]
-addopts = "--cov=src --cov-branch --cov-report=term --cov-report=xml --strict-markers"
+addopts = "--cov=src --cov-report=term --cov-report=xml --strict-markers"
 testpaths = ["tests"]
 
 [tool.ruff]
