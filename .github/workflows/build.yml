@@ -2,7 +2,6 @@
 name: build
 
 env:
-  POETRY_HOME: ~/.poetry
   POETRY_VERSION: '1.5.1'
   POETRY_VIRTUALENVS_IN_PROJECT: true
 
@@ -21,24 +20,15 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: "3.11"
-      - name: Cache Poetry installation
-        id: cache-poetry-installation
-        uses: actions/cache@v3
-        with:
-          path: ${{ env.POETRY_HOME }}
-          key: python-${{ steps.setup-python.outputs.python-version }}-poetry-${{ env.POETRY_VERSION }}
       - name: Install Poetry
-        if: steps.cache-poetry-installation.outputs.cache-hit != 'true'
-        run: curl -sSL https://install.python-poetry.org | python
-      - name: Prepend Poetry to PATH
-        run: echo ${{ env.POETRY_HOME }}/bin >> "$GITHUB_PATH"
+        run: pipx install --python '${{ steps.setup-python.outputs.python-path }}' poetry=='${{ env.POETRY_VERSION }}'
       - name: Cache Poetry venv
         id: cache-poetry-venv
         uses: actions/cache@v3
         with:
           path: .venv
-          key: python-${{ steps.setup-python.outputs.python-version }}-poetry-${{ env.POETRY_VERSION }}-venv-${{ hashFiles('poetry.lock') }}
-          restore-keys: python-${{ steps.setup-python.outputs.python-version }}-poetry-${{ env.POETRY_VERSION }}-venv-
+          key: ${{ runner.os }}-python-${{ steps.setup-python.outputs.python-version }}-poetry-${{ env.POETRY_VERSION }}-venv-${{ hashFiles('poetry.lock') }}
+          restore-keys: ${{ runner.os }}-python-${{ steps.setup-python.outputs.python-version }}-poetry-${{ env.POETRY_VERSION }}-venv-
       - name: Install dependencies
         if: steps.cache-poetry-venv.outputs.cache-hit != 'true'
         run: poetry install --no-interaction --no-root --sync -v
@@ -49,8 +39,8 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/.cache/pre-commit
-          key: python-${{ steps.setup-python.outputs.python-version }}-pre-commit-${{ hashFiles('.pre-commit-config.yaml') }}
-          restore-keys: python-${{ steps.setup-python.outputs.python-version }}-pre-commit-
+          key: ${{ runner.os }}-python-${{ steps.setup-python.outputs.python-version }}-pre-commit-${{ hashFiles('.pre-commit-config.yaml') }}
+          restore-keys: ${{ runner.os }}-python-${{ steps.setup-python.outputs.python-version }}-pre-commit-
       - name: Prune pre-commit hooks
         if: steps.cache-pre-commit.outputs.cache-hit != 'true'
         run: poetry run pre-commit gc
@@ -58,26 +48,6 @@ jobs:
         run: poetry run pre-commit run --color=always --hook-stage manual gitlint-ci
       - name: Run pre-commit
         run: poetry run pre-commit run --all-files --color=always --show-diff-on-failure
-
-  super-linter:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out repository
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - name: Run super-linter
-        uses: github/super-linter@v5.0.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          VALIDATE_DOCKERFILE_HADOLINT: false
-          VALIDATE_GITHUB_ACTIONS: false
-          VALIDATE_MARKDOWN: false
-          VALIDATE_PYTHON_BLACK: false
-          VALIDATE_PYTHON_FLAKE8: false
-          VALIDATE_PYTHON_ISORT: false
-          VALIDATE_PYTHON_MYPY: false
-          VALIDATE_YAML: false
 
   pytest:
     strategy:
@@ -96,24 +66,15 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Cache Poetry installation
-        id: cache-poetry-installation
-        uses: actions/cache@v3
-        with:
-          path: ${{ env.POETRY_HOME }}
-          key: python-${{ steps.setup-python.outputs.python-version }}-poetry-${{ env.POETRY_VERSION }}
       - name: Install Poetry
-        if: steps.cache-poetry-installation.outputs.cache-hit != 'true'
-        run: curl -sSL https://install.python-poetry.org | python
-      - name: Prepend Poetry to PATH
-        run: echo ${{ env.POETRY_HOME }}/bin >> "$GITHUB_PATH"
+        run: pipx install --python '${{ steps.setup-python.outputs.python-path }}' poetry=='${{ env.POETRY_VERSION }}'
       - name: Cache Poetry venv
         id: cache-poetry-venv
         uses: actions/cache@v3
         with:
           path: .venv
-          key: python-${{ steps.setup-python.outputs.python-version }}-poetry-${{ env.POETRY_VERSION }}-venv-${{ hashFiles('poetry.lock') }}
-          restore-keys: python-${{ steps.setup-python.outputs.python-version }}-poetry-${{ env.POETRY_VERSION }}-venv-
+          key: ${{ runner.os }}-python-${{ steps.setup-python.outputs.python-version }}-poetry-${{ env.POETRY_VERSION }}-venv-${{ hashFiles('poetry.lock') }}
+          restore-keys: ${{ runner.os }}-python-${{ steps.setup-python.outputs.python-version }}-poetry-${{ env.POETRY_VERSION }}-venv-
       - name: Install dependencies
         if: steps.cache-poetry-venv.outputs.cache-hit != 'true'
         run: poetry install --no-interaction --no-root --sync -v
@@ -132,7 +93,7 @@ jobs:
 
   release:
     if: github.ref == 'refs/heads/master'
-    needs: [pre-commit, super-linter, pytest]
+    needs: [pre-commit, pytest]
     runs-on: ubuntu-latest
     concurrency: release
     steps:
