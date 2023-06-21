@@ -1,6 +1,11 @@
 ---
 name: build
 
+env:
+  POETRY_HOME: ~/.poetry
+  POETRY_VERSION: '1.5.1'
+  POETRY_VIRTUALENVS_IN_PROJECT: true
+
 on: [push, pull_request]
 
 jobs:
@@ -11,24 +16,47 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 2
+      - name: Set up Python
+        id: setup-python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+      - name: Cache Poetry installation
+        id: cache-poetry-installation
+        uses: actions/cache@v3
+        with:
+          path: ${{ env.POETRY_HOME }}
+          key: python-${{ steps.setup-python.outputs.python-version }}-poetry-${{ env.POETRY_VERSION }}
       - name: Install Poetry
-        run: pipx install poetry
+        if: steps.cache-poetry-installation.outputs.cache-hit != 'true'
+        run: curl -sSL https://install.python-poetry.org | python
+      - name: Prepend Poetry to PATH
+        run: echo ${{ env.POETRY_HOME }}/bin >> "$GITHUB_PATH"
+      - name: Cache Poetry venv
+        id: cache-poetry-venv
+        uses: actions/cache@v3
+        with:
+          path: .venv
+          key: python-${{ steps.setup-python.outputs.python-version }}-poetry-${{ env.POETRY_VERSION }}-venv-${{ hashFiles('poetry.lock') }}
+          restore-keys: python-${{ steps.setup-python.outputs.python-version }}-poetry-${{ env.POETRY_VERSION }}-venv-
       - name: Install dependencies
-        run: poetry install -v
+        if: steps.cache-poetry-venv.outputs.cache-hit != 'true'
+        run: poetry install --no-interaction --no-root --sync -v
+      - name: Install root package
+        run: poetry install --no-interaction --only-root -v
       - name: Cache pre-commit hooks
         id: cache-pre-commit
         uses: actions/cache@v3
         with:
           path: ~/.cache/pre-commit
-          key: pre-commit-${{ hashFiles('.pre-commit-config.yaml') }}
-          restore-keys: pre-commit-
+          key: python-${{ steps.setup-python.outputs.python-version }}-pre-commit-${{ hashFiles('.pre-commit-config.yaml') }}
+          restore-keys: python-${{ steps.setup-python.outputs.python-version }}-pre-commit-
       - name: Prune pre-commit hooks
         if: steps.cache-pre-commit.outputs.cache-hit != 'true'
         run: poetry run pre-commit gc
       - name: Run gitlint
         run: poetry run pre-commit run --color=always --hook-stage manual gitlint-ci
       - name: Run pre-commit
-        if: success() || failure()
         run: poetry run pre-commit run --all-files --color=always --show-diff-on-failure
 
   super-linter:
@@ -68,10 +96,29 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
+      - name: Cache Poetry installation
+        id: cache-poetry-installation
+        uses: actions/cache@v3
+        with:
+          path: ${{ env.POETRY_HOME }}
+          key: python-${{ steps.setup-python.outputs.python-version }}-poetry-${{ env.POETRY_VERSION }}
       - name: Install Poetry
-        run: pipx install --python '${{ steps.setup-python.outputs.python-path }}' poetry
+        if: steps.cache-poetry-installation.outputs.cache-hit != 'true'
+        run: curl -sSL https://install.python-poetry.org | python
+      - name: Prepend Poetry to PATH
+        run: echo ${{ env.POETRY_HOME }}/bin >> "$GITHUB_PATH"
+      - name: Cache Poetry venv
+        id: cache-poetry-venv
+        uses: actions/cache@v3
+        with:
+          path: .venv
+          key: python-${{ steps.setup-python.outputs.python-version }}-poetry-${{ env.POETRY_VERSION }}-venv-${{ hashFiles('poetry.lock') }}
+          restore-keys: python-${{ steps.setup-python.outputs.python-version }}-poetry-${{ env.POETRY_VERSION }}-venv-
       - name: Install dependencies
-        run: poetry install --only=main,test -v
+        if: steps.cache-poetry-venv.outputs.cache-hit != 'true'
+        run: poetry install --no-interaction --no-root --sync -v
+      - name: Install root package
+        run: poetry install --no-interaction --only-root -v
       - name: Run pytest
         run: poetry run pytest --color=yes --with-functional
       - name: Upload coverage report
