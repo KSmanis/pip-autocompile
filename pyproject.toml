@@ -82,6 +82,7 @@ select = [
   "E",
   "F",
   "I",
+  "PT",
   "RUF",
   "S",
   "UP",
@@ -89,6 +90,11 @@ select = [
 ]
 src = ["src"]
 target-version = "py37"
+
+[tool.ruff.flake8-pytest-style]
+fixture-parentheses = false
+mark-parentheses = false
+parametrize-values-type = "tuple"
 
 [tool.ruff.isort]
 force-single-line = true
