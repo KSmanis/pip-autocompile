@@ -2,6 +2,13 @@
 
 <!--next-version-placeholder-->
 
+## v0.7.10 (2023-06-22)
+
+### Fix
+
+* **poetry:** Bump dependencies ([`7a15af4`](https://github.com/KSmanis/pip-autocompile/commit/7a15af47497dc124de2f453642d89c8db4377b2e))
+* **poetry:** Sunset Python 3.7 ([`7b33aff`](https://github.com/KSmanis/pip-autocompile/commit/7b33aff80c0354615765b8731a47871ee5230839))
+
 ## v0.7.9 (2023-06-18)
 
 ### Fix
