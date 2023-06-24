@@ -72,7 +72,8 @@ repos:
         name: mypy
         language: system
         entry: mypy
-        types_or: ["pyi", "python"]
+        require_serial: true
+        types: ["python"]
   # TOML
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.4.0
