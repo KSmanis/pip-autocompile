@@ -54,7 +54,9 @@ jobs:
         with:
           path: ~/.cache/pre-commit
           key: pre-commit-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('.pre-commit-config.yaml') }}
-          restore-keys: pre-commit-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-
+          restore-keys: |
+            pre-commit-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-
+            pre-commit-${{ runner.os }}-
       - name: Prune pre-commit hooks
         if: steps.cache-pre-commit.outputs.cache-hit != 'true'
         run: poetry run pre-commit gc
