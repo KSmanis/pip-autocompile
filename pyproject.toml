@@ -20,10 +20,6 @@ disallow_any_unimported = true
 show_error_codes = true
 strict = true
 
-[[tool.mypy.overrides]]
-ignore_missing_imports = true
-module = "pygit2"
-
 [tool.poetry]
 authors = ["Konstantinos Smanis <konstantinos.smanis@gmail.com>"]
 classifiers = [
