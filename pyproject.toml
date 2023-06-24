@@ -70,6 +70,7 @@ select = [
   "E",  # pycodestyle
   "F",  # pyflakes
   "I",  # isort
+  "PGH",  # pygrep-hooks
   "PT",  # flake8-pytest-style
   "RUF",  # ruff
   "S",  # flake8-bandit
