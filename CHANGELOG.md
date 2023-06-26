@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v0.7.11 (2023-06-26)
+
+### Fix
+
+* **deps:** Update dependency pygit2 to v1.12.2 ([`13d5ddd`](https://github.com/KSmanis/pip-autocompile/commit/13d5ddd246f694e88fe6fcee1e441d452595b534))
+
 ## v0.7.10 (2023-06-22)
 
 ### Fix
