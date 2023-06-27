@@ -11,6 +11,39 @@
         "lint",
         "test"
       ]
+    },
+    {
+      "matchPackagePatterns": [
+        "*"
+      ],
+      "semanticCommitType": "chore"
+    },
+    {
+      "matchDepTypes": [
+        "dependencies"
+      ],
+      "matchManagers": [
+        "poetry"
+      ],
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "semanticCommitType": "fix"
+    },
+    {
+      "matchDepTypes": [
+        "dependencies"
+      ],
+      "matchManagers": [
+        "poetry"
+      ],
+      "matchPackageNames": [
+        "python-on-whales"
+      ],
+      "matchUpdateTypes": [
+        "minor"
+      ],
+      "semanticCommitType": "fix"
     }
   ],
   "semanticCommits": "enabled"
