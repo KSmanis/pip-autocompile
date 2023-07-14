@@ -58,7 +58,7 @@ mypy = "^1.4.0"
 pre-commit = "^3.3.3"
 
 [tool.poetry.group.test.dependencies]
-pip-tools = "^6.13.0"
+pip-tools = "^7.0.0"
 pytest-cov = "^4.1.0"
 
 [tool.poetry.scripts]
