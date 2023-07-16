@@ -78,6 +78,7 @@ select = [
   "PT",  # flake8-pytest-style
   "RUF",  # ruff
   "S",  # flake8-bandit
+  "TCH",  # flake8-type-checking
   "UP",  # pyupgrade
   "W",  # pycodestyle
 ]
