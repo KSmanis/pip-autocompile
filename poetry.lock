@@ -707,17 +707,17 @@ testing = ["fields", "hunter", "process-tests", "pytest-xdist", "six", "virtuale
 
 [[package]]
 name = "python-on-whales"
-version = "0.62.0"
+version = "0.64.0"
 description = "A Docker client for Python, designed to be fun and intuitive!"
 optional = false
 python-versions = ">=3.8, <4"
 files = [
-    {file = "python-on-whales-0.62.0.tar.gz", hash = "sha256:7c735739f7b3b78e80d6aacd0c47eb0608ba4bdfa82819a9340becdc4815aa71"},
-    {file = "python_on_whales-0.62.0-py3-none-any.whl", hash = "sha256:7b876aed5ad44305ac2cd48c728df6e316ebb59de2247a08bea522cabba73b73"},
+    {file = "python-on-whales-0.64.0.tar.gz", hash = "sha256:eb6f55bb529fc287dc6fea693cd35cc702913a61f3e1f051efc162f720f3c154"},
+    {file = "python_on_whales-0.64.0-py3-none-any.whl", hash = "sha256:9a383dc5cd9f4161e858a010917d2d90bbda1eef6f01fa0e4a85c0b9ca33130f"},
 ]
 
 [package.dependencies]
-pydantic = ">=1.5,<2"
+pydantic = ">=1.5,<2.0.dev0 || >=2.1.dev0,<3"
 requests = "*"
 tqdm = "*"
 typer = ">=0.4.1"
@@ -926,4 +926,4 @@ test = ["pytest (>=6.0.0)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "2447425e0880396fe5ee8aa3eec4e67424ac6694b2254723e6c71557f081c5ca"
+content-hash = "a7cad3165faaa9b9c1ed9dad3fd1124c56c762e4bf73ebba0f42141b547ffc1c"
