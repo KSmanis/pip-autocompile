@@ -48,17 +48,17 @@ repository = "https://github.com/KSmanis/pip-autocompile"
 version = "0.7.11"
 
 [tool.poetry.dependencies]
-click = "^8.1.3"
-pygit2 = "^1.12.1"
+click = "^8.1.6"
+pygit2 = "^1.12.2"
 python = "^3.8"
-python-on-whales = "^0.62.0"
+python-on-whales = "^0.64.0"
 
 [tool.poetry.group.lint.dependencies]
-mypy = "^1.4.0"
+mypy = "^1.4.1"
 pre-commit = "^3.3.3"
 
 [tool.poetry.group.test.dependencies]
-pip-tools = "^7.0.0"
+pip-tools = "^7.1.0"
 pytest-cov = "^4.1.0"
 
 [tool.poetry.scripts]
