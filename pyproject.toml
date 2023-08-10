@@ -90,6 +90,10 @@ fixture-parentheses = false
 mark-parentheses = false
 parametrize-values-type = "tuple"
 
+[tool.ruff.flake8-type-checking]
+exempt-modules = []
+strict = true
+
 [tool.ruff.isort]
 force-single-line = true
 required-imports = ["from __future__ import annotations"]
