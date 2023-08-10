@@ -11,8 +11,8 @@ from typing import TYPE_CHECKING
 import click
 from python_on_whales import docker
 
+from pipautocompile.docker import dockerfile_has_build_stage
 from pipautocompile.git import working_tree
-from pipautocompile.io import file_contains_pattern
 from pipautocompile.io import find_spec_files
 from pipautocompile.logging import info
 from pipautocompile.utils import quote_args
@@ -25,7 +25,7 @@ if TYPE_CHECKING:
 @click.version_option(package_name="pip-autocompile")
 @click.option(
     "--docker-build-stage",
-    help="Docker build stage to search for.",
+    help="Docker build stage to search for (case-sensitive).",
     default="build-deps",
     show_default=True,
 )
@@ -83,11 +83,7 @@ def cli(
         spec_dir = spec_dir.resolve(strict=True)
         build_dir = spec_dir.parent if spec_dir.name == "requirements" else spec_dir
 
-        has_build_stage = file_contains_pattern(
-            file=build_dir / "Dockerfile",
-            pattern=rf"^FROM \S+ AS {docker_build_stage}$",
-        )
-        if has_build_stage:
+        if dockerfile_has_build_stage(build_dir / "Dockerfile", docker_build_stage):
             info("Building Docker image...")
             image = docker.build(
                 load=True, target=docker_build_stage, context_path=build_dir

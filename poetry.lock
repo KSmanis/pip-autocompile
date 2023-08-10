@@ -331,6 +331,20 @@ files = [
 ]
 
 [[package]]
+name = "dockerfile"
+version = "3.3.0"
+description = "Parse a dockerfile into a high-level representation using the official go parser."
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "dockerfile-3.3.0-cp38-abi3-macosx_12_0_x86_64.whl", hash = "sha256:808de8f323199f867e106e09448760525c82870015a37f1608189a21c1363f9c"},
+    {file = "dockerfile-3.3.0-cp38-abi3-macosx_13_0_arm64.whl", hash = "sha256:f126e83f3d62a64b328d58fdd5fbf46e5f556d597fe546f3f67cf47141890a73"},
+    {file = "dockerfile-3.3.0-cp38-abi3-manylinux_2_5_x86_64.manylinux1_x86_64.whl", hash = "sha256:9562f325fcc262497101d9ffacfa998879f2447864512e0d7ebca6837bb4f35c"},
+    {file = "dockerfile-3.3.0-cp38-cp38-win_amd64.whl", hash = "sha256:dfe5d74a24d9a604ae5e7e600fdcf2398df998e1697042a70909207268eb6bbe"},
+    {file = "dockerfile-3.3.0.tar.gz", hash = "sha256:daec695d1ac8293e5829b3f12ab820d5dd4f0913f66b9dbf94c7dca4d931223e"},
+]
+
+[[package]]
 name = "exceptiongroup"
 version = "1.1.2"
 description = "Backport of PEP 654 (exception groups)"
@@ -1020,4 +1034,4 @@ test = ["pytest (>=6.0.0)", "setuptools (>=65)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "dff64d600a344ca4a917259566a452b00b1ed9796921a65a7eabff83593c51b9"
+content-hash = "1257f1304d90a4dad22a614d89706e1d985f34950f5b2abdae03825e295fb67b"
