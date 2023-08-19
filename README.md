@@ -9,7 +9,7 @@
 [![mypy: strict](https://img.shields.io/badge/mypy-strict-2a6db2)](http://mypy-lang.org/)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=KSmanis_pip-autocompile&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=KSmanis_pip-autocompile)
 [![codecov](https://codecov.io/gh/KSmanis/pip-autocompile/branch/master/graph/badge.svg?token=47HDGLM2NQ)](https://codecov.io/gh/KSmanis/pip-autocompile)
-[![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org)
+[![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-%23FE5196?logo=conventionalcommits&logoColor=white)](https://conventionalcommits.org)
 
 Automate pip-compile for multiple environments.
 
