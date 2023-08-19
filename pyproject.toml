@@ -62,6 +62,9 @@ python-on-whales = "^0.64.0"
 mypy = "^1.4.1"
 pre-commit = "^3.3.3"
 
+[tool.poetry.group.release.dependencies]
+python-semantic-release = "^8.0.7"
+
 [tool.poetry.group.test.dependencies]
 pip-tools = "^7.3.0"
 pytest-cov = "^4.1.0"
@@ -111,9 +114,14 @@ required-imports = ["from __future__ import annotations"]
 "tests/**" = ["S101"]
 
 [tool.semantic_release]
-build_command = "pip install poetry && poetry build"
-commit_subject = "build: release v{version}"
+build_command = "poetry build"
+commit_author = "Konstantinos Smanis <konstantinos.smanis@gmail.com>"
+commit_message = "build: release v{version}"
+major_on_zero = false
 version_toml = ["pyproject.toml:tool.poetry.version"]
+
+[tool.semantic_release.changelog]
+exclude_commit_patterns = ["\\d+\\.\\d+\\.\\d+"]
 
 [tool.tomlsort]
 all = true
