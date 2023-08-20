@@ -49,7 +49,7 @@ packages = [
 ]
 readme = "README.md"
 repository = "https://github.com/KSmanis/pip-autocompile"
-version = "0.7.12"
+version = "0.7.13"
 
 [tool.poetry.dependencies]
 click = "^8.1.7"

@@ -2,6 +2,69 @@
 
 
 
+## v0.7.13 (2023-08-20)
+
+### Build
+
+* build(ruff/TCH): enable strict mode ([`437f73d`](https://github.com/KSmanis/pip-autocompile/commit/437f73da0d68f6ccc49dd8d422c167d290b09505))
+
+### Chore
+
+* chore: renormalize `CHANGELOG.md` ([`9df0bd9`](https://github.com/KSmanis/pip-autocompile/commit/9df0bd91eba46267c22cccb0af4a93548dd0c6bf))
+
+* chore(deps): update pre-commit hook astral-sh/ruff-pre-commit to v0.0.285 ([`b4314fd`](https://github.com/KSmanis/pip-autocompile/commit/b4314fdeea36d6d8ed2f0ce7c8ba0cee9267b576))
+
+* chore(deps): update relekang/python-semantic-release action to v8.0.7 ([`4b15131`](https://github.com/KSmanis/pip-autocompile/commit/4b15131f3f5b087174c5b3423094a1061902c7bc))
+
+* chore(deps): update dependency mypy to v1.5.1 ([`0bb02a2`](https://github.com/KSmanis/pip-autocompile/commit/0bb02a2ec07c6df0ef360d20f24146c4fd85bfdc))
+
+* chore(deps): update relekang/python-semantic-release action to v8.0.6 ([`38dc776`](https://github.com/KSmanis/pip-autocompile/commit/38dc776f67ad2faa11269ec9501d5251d8ccc0a5))
+
+* chore(deps): update relekang/python-semantic-release action to v8 ([`b3034d4`](https://github.com/KSmanis/pip-autocompile/commit/b3034d4066ed247c92326e871903425dee0edf3c))
+
+* chore(deps): downgrade relekang/python-semantic-release action to v7 ([`a147217`](https://github.com/KSmanis/pip-autocompile/commit/a147217a344091662ca8f750133fad6ccf5c6284))
+
+* chore(deps): update dependency mypy to v1.5.0 ([`5b98436`](https://github.com/KSmanis/pip-autocompile/commit/5b98436830672849e7ebeb47b503b3f1e52d04ee))
+
+* chore(poetry): bump dependencies ([`5228adb`](https://github.com/KSmanis/pip-autocompile/commit/5228adb0c8e0cb84e0914d53d97f7279f7a49545))
+
+* chore(deps): update pre-commit hook astral-sh/ruff-pre-commit to v0.0.284 ([`4d71383`](https://github.com/KSmanis/pip-autocompile/commit/4d713830a9c8f0cf64e29417265aeebbd83641df))
+
+* chore(deps): update pre-commit hook astral-sh/ruff-pre-commit to v0.0.283 ([`81f5d3f`](https://github.com/KSmanis/pip-autocompile/commit/81f5d3fb89b7e8581f77d3149daccd729b2d33ba))
+
+* chore(deps): update dependency pip-tools to v7.3.0 ([`9fb5c57`](https://github.com/KSmanis/pip-autocompile/commit/9fb5c5744bd9568d8e669452c40b381714bef80e))
+
+* chore(deps): update dependency pip-tools to v7.2.0 ([`01b293b`](https://github.com/KSmanis/pip-autocompile/commit/01b293b4ba306f3416f3deae601b1ac38a8b5a24))
+
+* chore(deps): update pre-commit hook astral-sh/ruff-pre-commit to v0.0.282 ([`146c084`](https://github.com/KSmanis/pip-autocompile/commit/146c084752b4bcf09ad296a305dd9c9f40705572))
+
+### Ci
+
+* ci(build): fix release job
+
+https://python-semantic-release.readthedocs.io/en/latest/migrating_from_v7.html ([`c1bf2f3`](https://github.com/KSmanis/pip-autocompile/commit/c1bf2f364f1523582d0211de40b0a0646ca8c606))
+
+* ci: specify default Python version ([`798f62a`](https://github.com/KSmanis/pip-autocompile/commit/798f62aa8f91935ad1975e3731e6ff6cce1e8a76))
+
+* ci(build/pre-commit): use default Python version ([`3ee86a1`](https://github.com/KSmanis/pip-autocompile/commit/3ee86a15ecd062baae330d4dfa1c4f912e5b5fbb))
+
+### Documentation
+
+* docs(README): update Conventional Commits badge ([`f8a5dfd`](https://github.com/KSmanis/pip-autocompile/commit/f8a5dfda074d27f118141746348163cddf4000e0))
+
+### Fix
+
+* fix(poetry): bump dependencies ([`cbf1df9`](https://github.com/KSmanis/pip-autocompile/commit/cbf1df912cccc93c3ed5e48b119129ab28a0b4b6))
+
+### Refactor
+
+* refactor: improve Dockerfile parsing ([`471ee5e`](https://github.com/KSmanis/pip-autocompile/commit/471ee5efc0cad226b0ec781dd84c852ed563a2db))
+
+### Test
+
+* test: silence deprecation warnings ([`1e247cf`](https://github.com/KSmanis/pip-autocompile/commit/1e247cfb8cf9c7ce54ff0f3c14e1d07798119555))
+
+
 ## v0.7.12 (2023-08-01)
 
 ### Build
