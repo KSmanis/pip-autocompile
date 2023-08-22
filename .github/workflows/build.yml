@@ -8,7 +8,7 @@ defaults:
 env:
   POETRY_HOME: ~/.poetry
   # renovate: datasource=github-tags depName=python-poetry/poetry
-  POETRY_VERSION: '1.6.0'
+  POETRY_VERSION: '1.6.1'
   POETRY_VIRTUALENVS_IN_PROJECT: true
 
 on: [push, pull_request]
