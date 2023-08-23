@@ -123,6 +123,9 @@ version_toml = ["pyproject.toml:tool.poetry.version"]
 [tool.semantic_release.changelog]
 exclude_commit_patterns = ["\\d+\\.\\d+\\.\\d+"]
 
+[tool.semantic_release.changelog.environment]
+keep_trailing_newline = true
+
 [tool.tomlsort]
 all = true
 spaces_before_inline_comment = 2
