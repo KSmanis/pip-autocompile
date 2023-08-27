@@ -9,6 +9,7 @@
       "automergeType": "branch",
       "matchDepTypes": [
         "lint",
+        "release",
         "test"
       ]
     },
