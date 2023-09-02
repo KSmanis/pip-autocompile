@@ -109,7 +109,7 @@ jobs:
       - name: Upload coverage report
         uses: codecov/codecov-action@v3.1.4
       - name: Run SonarCloud scanner
-        uses: SonarSource/sonarcloud-github-action@v1.9
+        uses: SonarSource/sonarcloud-github-action@5875562561d22a34be0c657405578705a169af6c # v1.9.1
         if: matrix.os == 'ubuntu-latest'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
