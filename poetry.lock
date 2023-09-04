@@ -914,13 +914,13 @@ yaml = ["PyYaml (>=5.2)"]
 
 [[package]]
 name = "python-on-whales"
-version = "0.64.2"
+version = "0.64.3"
 description = "A Docker client for Python, designed to be fun and intuitive!"
 optional = false
 python-versions = ">=3.8, <4"
 files = [
-    {file = "python-on-whales-0.64.2.tar.gz", hash = "sha256:ff1c7d308d6049d5eaf57c9c7feb9c5cf3bb9feebecb483abfae95c3fa0ff885"},
-    {file = "python_on_whales-0.64.2-py3-none-any.whl", hash = "sha256:c48b10a4e6c4f99dcdf6ff101826337129115d7ea84f308d945b1297057115a7"},
+    {file = "python-on-whales-0.64.3.tar.gz", hash = "sha256:075fcd89ca6018c274f13791e5579bf2fa7c46808a3161c2686a4984510c3d1c"},
+    {file = "python_on_whales-0.64.3-py3-none-any.whl", hash = "sha256:6adb4ac0486dbdab663c491952c1b1007e6599f9db333fbf07e2ad943f7bc847"},
 ]
 
 [package.dependencies]
