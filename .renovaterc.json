@@ -7,11 +7,6 @@
     {
       "automerge": true,
       "automergeType": "branch",
-      "matchDepTypes": [
-        "lint",
-        "release",
-        "test"
-      ],
       "matchManagers": [
         "poetry"
       ]
@@ -23,6 +18,7 @@
       "semanticCommitType": "chore"
     },
     {
+      "automerge": false,
       "matchDepTypes": [
         "dependencies"
       ],
@@ -35,6 +31,7 @@
       "semanticCommitType": "fix"
     },
     {
+      "automerge": false,
       "matchDepTypes": [
         "dependencies"
       ],
