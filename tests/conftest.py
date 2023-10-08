@@ -68,7 +68,7 @@ def git_superproject_factory(  # type: ignore[no-any-unimported]
     git_identity: pygit2.Signature,
     git_repo_factory: Callable[[Path], pygit2.Repository],
 ) -> Callable[[Path], pygit2.Repository]:
-    def git_superproject(path: Path) -> pygit2.Repository:  # type: ignore[no-any-unimported] # noqa: E501
+    def git_superproject(path: Path) -> pygit2.Repository:  # type: ignore[no-any-unimported]
         superproject = git_repo_factory(path / "superproject")
         submodule = git_repo_factory(path / "submodule")
 
