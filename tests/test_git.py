@@ -26,11 +26,11 @@ def test_working_tree_bare(tmp_path: Path) -> None:
     argvalues=(
         (
             "git_repo_factory",
-            {"."},
+            ["."],
         ),
         (
             "git_superproject_factory",
-            {"superproject", "submodule", "superproject/submodule"},
+            ["superproject", "submodule", "superproject/submodule"],
         ),
     ),
     ids=lambda argvalue: repr(argvalue),
@@ -39,7 +39,7 @@ def test_working_tree(
     request: pytest.FixtureRequest,
     tmp_path: Path,
     repo_factory_fixture: str,
-    working_trees: set[str],
+    working_trees: list[str],
 ) -> None:
     repo_factory = request.getfixturevalue(repo_factory_fixture)
     repo_factory(tmp_path)

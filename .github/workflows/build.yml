@@ -105,7 +105,7 @@ jobs:
       - name: Install root package
         run: poetry install --no-interaction --only-root -v
       - name: Run pytest
-        run: poetry run pytest --color=yes --cov-config=pyproject.toml --with-functional
+        run: poetry run pytest --color=yes --cov-config=pyproject.toml --numprocesses=8 --with-functional
       - name: Upload coverage report
         uses: codecov/codecov-action@eaaf4bedf32dbdc6b720b63067d99c4d77d6047d # v3.1.4
       - name: Run SonarCloud scanner
