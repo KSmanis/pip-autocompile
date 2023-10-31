@@ -1,5 +1,19 @@
 # Changelog
 
+## [v0.7.14](https://github.com/KSmanis/pip-autocompile/releases/tag/v0.7.14) (2023-10-31)
+
+### Bug Fixes
+
+- **poetry:** bump dependencies ([`51eb8f5`](https://github.com/KSmanis/pip-autocompile/commit/51eb8f5177fa5e4553f385c811b34cee580bd29f))
+
+### Code Refactoring
+
+- **utils/quote_args:** improve type hints ([`ca104b0`](https://github.com/KSmanis/pip-autocompile/commit/ca104b00386d5de427f42e93d4b1927b9b49a896))
+
+### Documentation
+
+- **CHANGELOG:** use custom template ([`647b4ad`](https://github.com/KSmanis/pip-autocompile/commit/647b4adbcd5f0937cc57c83de3efd1f31dd718de))
+
 ## [v0.7.13](https://github.com/KSmanis/pip-autocompile/releases/tag/v0.7.13) (2023-08-20)
 
 ### Bug Fixes
