@@ -75,10 +75,6 @@ pip-autocompile = "pipautocompile.main:cli"
 
 [tool.pytest.ini_options]
 addopts = "--cov=src --cov-report=term --cov-report=xml --strict-markers"
-filterwarnings = [
-  "ignore:Support for class-based `config` is deprecated, use ConfigDict instead:DeprecationWarning:pydantic",
-  "ignore:Valid config keys have changed in V2:UserWarning:pydantic",
-]
 testpaths = ["tests"]
 
 [tool.ruff]
