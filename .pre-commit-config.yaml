@@ -1,6 +1,8 @@
 ---
 default_install_hook_types:
   - commit-msg
+  - post-checkout
+  - post-merge
   - pre-commit
 repos:
   # Meta
@@ -61,6 +63,8 @@ repos:
     rev: 1.7.0
     hooks:
       - id: poetry-check
+      - id: poetry-install
+        args: ["--sync"]
       - id: poetry-lock
         args: ["--no-update"]
   - repo: https://github.com/astral-sh/ruff-pre-commit
