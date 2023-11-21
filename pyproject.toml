@@ -78,10 +78,8 @@ addopts = "--cov=src --cov-report=term --cov-report=xml --strict-markers"
 testpaths = ["tests"]
 
 [tool.ruff]
-select = [
+extend-select = [
   "B",  # flake8-bugbear
-  "E",  # pycodestyle
-  "F",  # pyflakes
   "I",  # isort
   "PGH",  # pygrep-hooks
   "PT",  # flake8-pytest-style
@@ -89,21 +87,20 @@ select = [
   "S",  # flake8-bandit
   "TCH",  # flake8-type-checking
   "UP",  # pyupgrade
-  "W",  # pycodestyle
 ]
 src = ["src"]
 target-version = "py38"
 
-[tool.ruff.flake8-pytest-style]
+[tool.ruff.lint.flake8-pytest-style]
 fixture-parentheses = false
 mark-parentheses = false
 parametrize-values-type = "tuple"
 
-[tool.ruff.flake8-type-checking]
+[tool.ruff.lint.flake8-type-checking]
 exempt-modules = []
 strict = true
 
-[tool.ruff.isort]
+[tool.ruff.lint.isort]
 force-single-line = true
 required-imports = ["from __future__ import annotations"]
 
