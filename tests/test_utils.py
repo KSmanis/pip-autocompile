@@ -8,7 +8,7 @@ from pipautocompile.utils import quote_args
 @pytest.mark.parametrize(
     argnames=("args", "expected"),
     argvalues=(
-        (tuple(), ""),
+        ((), ""),
         ((None,), "None"),
         ((1, None, 1.5, True, "", " foo", "bar "), "1 None 1.5 True '' ' foo' 'bar '"),
         (("",), "''"),

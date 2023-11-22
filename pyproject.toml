@@ -80,11 +80,14 @@ testpaths = ["tests"]
 [tool.ruff]
 extend-select = [
   "B",  # flake8-bugbear
+  "C4",  # flake8-comprehensions
   "I",  # isort
   "PGH",  # pygrep-hooks
+  "PIE",  # fkae8-pie
   "PT",  # flake8-pytest-style
   "RUF",  # ruff
   "S",  # flake8-bandit
+  "SIM",  # flake8-simplify
   "TCH",  # flake8-type-checking
   "UP",  # pyupgrade
 ]

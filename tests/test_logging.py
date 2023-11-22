@@ -20,9 +20,9 @@ def runner() -> CliRunner:
 @pytest.mark.parametrize(
     argnames=("args", "kwargs", "expected"),
     argvalues=(
-        (tuple(), {}, {"nt": b"\r\n", "posix": b"\n"}),
-        (tuple(), {"nl": True}, {"nt": b"\r\n", "posix": b"\n"}),
-        (tuple(), {"nl": False}, {"nt": b"", "posix": b""}),
+        ((), {}, {"nt": b"\r\n", "posix": b"\n"}),
+        ((), {"nl": True}, {"nt": b"\r\n", "posix": b"\n"}),
+        ((), {"nl": False}, {"nt": b"", "posix": b""}),
         ((None,), {}, {"nt": b"\r\n", "posix": b"\n"}),
         ((None,), {"nl": True}, {"nt": b"\r\n", "posix": b"\n"}),
         ((None,), {"nl": False}, {"nt": b"", "posix": b""}),
@@ -44,17 +44,17 @@ def runner() -> CliRunner:
             {"nt": b"foo", "posix": b"\x1b[33m\x1b[1mfoo\x1b[0m"},
         ),
         (
-            tuple(),
+            (),
             {"message": "foo"},
             {"nt": b"foo\r\n", "posix": b"\x1b[33m\x1b[1mfoo\x1b[0m\n"},
         ),
         (
-            tuple(),
+            (),
             {"message": "foo", "nl": True},
             {"nt": b"foo\r\n", "posix": b"\x1b[33m\x1b[1mfoo\x1b[0m\n"},
         ),
         (
-            tuple(),
+            (),
             {"message": "foo", "nl": False},
             {"nt": b"foo", "posix": b"\x1b[33m\x1b[1mfoo\x1b[0m"},
         ),
