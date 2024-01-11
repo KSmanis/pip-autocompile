@@ -26,7 +26,7 @@ jobs:
         uses: actions/setup-python@0a5c61591373683505ea898e09a3ea4f39ef2b9c # v5
       - name: Cache Poetry
         id: cache-poetry
-        uses: actions/cache@704facf57e6136b1bc63b828d79edcd491f0ee84 # v3
+        uses: actions/cache@e12d46a63a90f2fae62d114769bbf2a179198b5c # v3
         with:
           path: ${{ env.POETRY_HOME }}
           key: poetry-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ env.POETRY_VERSION }}
@@ -37,7 +37,7 @@ jobs:
         run: echo ${{ env.POETRY_HOME }}/bin >> "$GITHUB_PATH"
       - name: Cache venv
         id: cache-venv
-        uses: actions/cache@704facf57e6136b1bc63b828d79edcd491f0ee84 # v3
+        uses: actions/cache@e12d46a63a90f2fae62d114769bbf2a179198b5c # v3
         with:
           path: .venv
           key: venv-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('poetry.lock') }}
@@ -49,7 +49,7 @@ jobs:
         run: poetry install --no-interaction --only-root -v
       - name: Cache pre-commit hooks
         id: cache-pre-commit
-        uses: actions/cache@704facf57e6136b1bc63b828d79edcd491f0ee84 # v3
+        uses: actions/cache@e12d46a63a90f2fae62d114769bbf2a179198b5c # v3
         with:
           path: ~/.cache/pre-commit
           key: pre-commit-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('.pre-commit-config.yaml') }}
@@ -61,7 +61,7 @@ jobs:
         run: poetry run pre-commit gc
       - name: Cache mypy
         id: cache-mypy
-        uses: actions/cache@704facf57e6136b1bc63b828d79edcd491f0ee84 # v3
+        uses: actions/cache@e12d46a63a90f2fae62d114769bbf2a179198b5c # v3
         with:
           path: .mypy_cache
           key: mypy-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('poetry.lock') }}-${{ github.sha }}
@@ -92,7 +92,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Cache Poetry
         id: cache-poetry
-        uses: actions/cache@704facf57e6136b1bc63b828d79edcd491f0ee84 # v3
+        uses: actions/cache@e12d46a63a90f2fae62d114769bbf2a179198b5c # v3
         with:
           path: ${{ env.POETRY_HOME }}
           key: poetry-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ env.POETRY_VERSION }}
@@ -103,7 +103,7 @@ jobs:
         run: echo ${{ env.POETRY_HOME }}/bin >> "$GITHUB_PATH"
       - name: Cache venv
         id: cache-venv
-        uses: actions/cache@704facf57e6136b1bc63b828d79edcd491f0ee84 # v3
+        uses: actions/cache@e12d46a63a90f2fae62d114769bbf2a179198b5c # v3
         with:
           path: .venv
           key: venv-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('poetry.lock') }}
@@ -142,7 +142,7 @@ jobs:
         uses: actions/setup-python@0a5c61591373683505ea898e09a3ea4f39ef2b9c # v5
       - name: Cache Poetry
         id: cache-poetry
-        uses: actions/cache@704facf57e6136b1bc63b828d79edcd491f0ee84 # v3
+        uses: actions/cache@e12d46a63a90f2fae62d114769bbf2a179198b5c # v3
         with:
           path: ${{ env.POETRY_HOME }}
           key: poetry-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ env.POETRY_VERSION }}
@@ -153,7 +153,7 @@ jobs:
         run: echo ${{ env.POETRY_HOME }}/bin >> "$GITHUB_PATH"
       - name: Cache venv
         id: cache-venv
-        uses: actions/cache@704facf57e6136b1bc63b828d79edcd491f0ee84 # v3
+        uses: actions/cache@e12d46a63a90f2fae62d114769bbf2a179198b5c # v3
         with:
           path: .venv
           key: venv-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('poetry.lock') }}
