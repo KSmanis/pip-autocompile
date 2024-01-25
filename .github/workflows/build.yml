@@ -116,7 +116,7 @@ jobs:
       - name: Run pytest
         run: poetry run pytest --color=yes --cov-config=pyproject.toml --numprocesses=8 --with-functional
       - name: Upload coverage report
-        uses: codecov/codecov-action@eaaf4bedf32dbdc6b720b63067d99c4d77d6047d # v3.1.4
+        uses: codecov/codecov-action@4fe8c5f003fae66aa5ebb77cfd3e7bfbbda0b6b0 # v3.1.5
       - name: Run SonarCloud scanner
         uses: SonarSource/sonarcloud-github-action@49e6cd3b187936a73b8280d59ffd9da69df63ec9 # v2.1.1
         if: matrix.os == 'ubuntu-latest'
