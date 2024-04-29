@@ -63,10 +63,6 @@ repos:
     rev: 1.8.0
     hooks:
       - id: poetry-check
-      - id: poetry-install
-        args: ["--sync"]
-      - id: poetry-lock
-        args: ["--no-update"]
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.4.2
     hooks:
