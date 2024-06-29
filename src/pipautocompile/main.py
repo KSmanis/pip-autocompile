@@ -158,8 +158,8 @@ def cli(
         else:
             for spec in specs:
                 info(f"Compiling {spec}...")
-                subprocess.check_call(
-                    ("pip-compile", *pip_compile_args, spec.name),  # noqa: S603
+                subprocess.check_call(  # noqa: S603
+                    ("pip-compile", *pip_compile_args, spec.name),
                     cwd=spec_dir,
                     env={**os.environ, **pip_compile_env},
                 )
