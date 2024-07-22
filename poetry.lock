@@ -1101,17 +1101,17 @@ yaml = ["PyYaml (>=6.0.1)"]
 
 [[package]]
 name = "python-on-whales"
-version = "0.65.0"
+version = "0.72.0"
 description = "A Docker client for Python, designed to be fun and intuitive!"
 optional = false
 python-versions = "<4,>=3.8"
 files = [
-    {file = "python-on-whales-0.65.0.tar.gz", hash = "sha256:2d48f1ce99b8c9119d45f6eb5bbd445f08587cce34d4e785527cec9b3b2ac008"},
-    {file = "python_on_whales-0.65.0-py3-none-any.whl", hash = "sha256:e53ddd77bebc2758d1d13640e0c1e83e20d5cc1e956b81ab9c2301e43a309a55"},
+    {file = "python_on_whales-0.72.0-py3-none-any.whl", hash = "sha256:092b440f43a34bbe90536b82a41ae3c199018dfc66d7e0dc52d4d659b82683c2"},
+    {file = "python_on_whales-0.72.0.tar.gz", hash = "sha256:280da91724ae728ac2baf503584938ecfdee2f83bb88e65413eed14b1fe74d41"},
 ]
 
 [package.dependencies]
-pydantic = ">=1.5,<2.0.dev0 || >=2.1.dev0,<3"
+pydantic = ">=1.9,<2.0.dev0 || >=2.1.dev0,<3"
 requests = "*"
 tqdm = "*"
 typer = ">=0.4.1"
@@ -1447,4 +1447,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "547306b4b760366df6defb6401b459d7ff66a8f8a390c2eab36dc76306ca4022"
+content-hash = "f8506754dd413af05432fe740b3ca0c5ac1f2e1dd0e8c8bc2da3b6b8f949b967"
