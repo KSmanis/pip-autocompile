@@ -12,10 +12,10 @@
       ]
     },
     {
-      "matchPackagePatterns": [
+      "semanticCommitType": "chore",
+      "matchPackageNames": [
         "*"
-      ],
-      "semanticCommitType": "chore"
+      ]
     },
     {
       "automerge": false,
