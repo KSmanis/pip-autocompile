@@ -86,7 +86,7 @@ jobs:
           fetch-depth: 0
       - name: Set up Python
         id: setup-python
-        uses: actions/setup-python@39cd14951b08e74b54015e9e001cdefcf80e669f # v5
+        uses: actions/setup-python@f677139bbe7f9c59b41e40162b753c062f5d49a3 # v5
         with:
           python-version: ${{ matrix.python-version }}
       - name: Cache Poetry
@@ -140,7 +140,7 @@ jobs:
           fetch-depth: 0
       - name: Set up Python
         id: setup-python
-        uses: actions/setup-python@39cd14951b08e74b54015e9e001cdefcf80e669f # v5
+        uses: actions/setup-python@f677139bbe7f9c59b41e40162b753c062f5d49a3 # v5
       - name: Cache Poetry
         id: cache-poetry
         uses: actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9 # v4
