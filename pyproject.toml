@@ -60,7 +60,7 @@ python-on-whales = "^0.65.0"
 
 [tool.poetry.group.lint.dependencies]
 mypy = "^1.6.1"
-pre-commit = "^3.5.0"
+pre-commit = "^4.0.0"
 
 [tool.poetry.group.release.dependencies]
 python-semantic-release = "^9.0.0"
