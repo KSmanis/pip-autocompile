@@ -7,6 +7,10 @@
 - **poetry:** bump dependencies ([`ca5a0a9`](https://github.com/KSmanis/pip-autocompile/commit/ca5a0a9786abbfeb6314612f3944cafc6a9e9d91))
 - **poetry:** sunset Python 3.8 ([`5bf2ed4`](https://github.com/KSmanis/pip-autocompile/commit/5bf2ed47948692c6ed6c3c15e6a12da9bc459f85))
 
+### Reverts
+
+- fix gitlint installation ([`4aa65b2`](https://github.com/KSmanis/pip-autocompile/commit/4aa65b2211880274b7b928ed0062f2d749efb83c))
+
 ## [v0.7.14](https://github.com/KSmanis/pip-autocompile/releases/tag/v0.7.14) (2023-10-31)
 
 ### Bug Fixes
@@ -16,6 +20,10 @@
 ### Code Refactoring
 
 - **utils/quote_args:** improve type hints ([`ca104b0`](https://github.com/KSmanis/pip-autocompile/commit/ca104b00386d5de427f42e93d4b1927b9b49a896))
+
+### Reverts
+
+- test against Python 3.12 ([`a9fedad`](https://github.com/KSmanis/pip-autocompile/commit/a9fedad5a626ffc944fc7338e927a146fcd5baa1))
 
 ### Documentation
 
@@ -46,6 +54,10 @@
 ### Bug Fixes
 
 - **deps:** update dependency pygit2 to v1.12.2 ([`13d5ddd`](https://github.com/KSmanis/pip-autocompile/commit/13d5ddd246f694e88fe6fcee1e441d452595b534))
+
+### Reverts
+
+- remove deprecated `pygit2` override ([`799c905`](https://github.com/KSmanis/pip-autocompile/commit/799c905eb2c52ef9a7641f442dc1f928b72e5c7a))
 
 ## [v0.7.10](https://github.com/KSmanis/pip-autocompile/releases/tag/v0.7.10) (2023-06-22)
 

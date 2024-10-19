@@ -128,6 +128,9 @@ exclude_commit_patterns = ["\\d+\\.\\d+\\.\\d+"]
 [tool.semantic_release.changelog.environment]
 keep_trailing_newline = true
 
+[tool.semantic_release.commit_parser_options]
+allowed_tags = ["docs", "feat", "fix", "perf", "refactor", "revert"]
+
 [tool.tomlsort]
 all = true
 spaces_before_inline_comment = 2
