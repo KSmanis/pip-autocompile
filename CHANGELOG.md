@@ -1,5 +1,11 @@
 # Changelog
 
+## [v0.7.16](https://github.com/KSmanis/pip-autocompile/releases/tag/v0.7.16) (2024-10-19)
+
+### Bug Fixes
+
+- **semantic-release:** fix templates ([`bc2f55b`](https://github.com/KSmanis/pip-autocompile/commit/bc2f55b7c151dd2fe1e1117b39cbc7ad013aa8e3))
+
 ## [v0.7.15](https://github.com/KSmanis/pip-autocompile/releases/tag/v0.7.15) (2024-10-19)
 
 ### Bug Fixes
