@@ -66,8 +66,6 @@ jobs:
           key: mypy-${{ runner.os }}-${{ env.PYTHON_VERSION }}-${{ hashFiles('poetry.lock') }}-${{ github.sha }}
           restore-keys: mypy-${{ runner.os }}-${{ env.PYTHON_VERSION }}-${{ hashFiles('poetry.lock') }}-
       - name: Run gitlint
-        env:
-          VIRTUALENV_PIP: 23.2.1
         run: poetry run pre-commit run --color=always --hook-stage manual gitlint-ci
       - name: Run pre-commit
         run: poetry run pre-commit run --all-files --color=always --show-diff-on-failure
