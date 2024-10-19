@@ -1,5 +1,5 @@
 # [{{ version.as_tag() }}](https://github.com/{{ context.repo_owner|urlencode }}/{{ context.repo_name|urlencode }}/releases/tag/{{ version.as_tag()|urlencode }}) ({{ release.tagged_date.strftime("%Y-%m-%d") }})
-{% for commit_type, heading in (("breaking", "BREAKING CHANGES"), ("feature", "Features"), ("fix", "Bug Fixes"), ("performance", "Performance improvements"), ("refactor", "Code Refactoring"), ("revert", "Reverts"), ("documentation", "Documentation")) if commit_type in release["elements"] %}
+{% for commit_type, heading in (("breaking", "BREAKING CHANGES"), ("features", "Features"), ("bug fixes", "Bug Fixes"), ("performance improvements", "Performance improvements"), ("refactoring", "Code Refactoring"), ("revert", "Reverts"), ("documentation", "Documentation")) if commit_type in release["elements"] %}
 ## {{ heading }}
 
 {% for commit in release["elements"][commit_type] -%}
