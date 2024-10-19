@@ -1,8 +1,6 @@
 ---
 default_install_hook_types:
   - commit-msg
-  - post-checkout
-  - post-merge
   - pre-commit
 repos:
   # Meta
