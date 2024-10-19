@@ -42,7 +42,7 @@ def pip_compile_path(noop_path: Path) -> Path:
 
 
 @pytest.fixture
-def pip_compile_superproject_path(  # type: ignore[no-any-unimported]
+def pip_compile_superproject_path(
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,
     git_superproject_factory: Callable[[Path], pygit2.Repository],
