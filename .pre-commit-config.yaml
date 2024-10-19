@@ -38,15 +38,10 @@ repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.6.0
     hooks:
-      - id: check-json
       - id: pretty-format-json
         args: ["--autofix"]
+      - id: check-json
   # Markdown
-  - repo: https://github.com/igorshubovych/markdownlint-cli
-    rev: v0.42.0
-    hooks:
-      - id: markdownlint
-        exclude: "^CHANGELOG.md$"
   - repo: https://github.com/executablebooks/mdformat
     rev: 0.7.17
     hooks:
@@ -55,6 +50,11 @@ repos:
           - mdformat-gfm
           - mdformat-tables
         args: ["--number", "--wrap", "80"]
+        exclude: "^CHANGELOG.md$"
+  - repo: https://github.com/igorshubovych/markdownlint-cli
+    rev: v0.42.0
+    hooks:
+      - id: markdownlint
         exclude: "^CHANGELOG.md$"
   # Python
   - repo: https://github.com/python-poetry/poetry
