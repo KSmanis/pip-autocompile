@@ -178,4 +178,4 @@ jobs:
         run: poetry run semantic-release publish
       - name: Publish package distributions to PyPI
         if: steps.bump-version.outputs.released == 'true'
-        uses: pypa/gh-action-pypi-publish@67339c736fd9354cd4f8cb0b744f2b82a74b5c70 # v1.12.3
+        uses: pypa/gh-action-pypi-publish@76f52bc884231f62b9a034ebfe128415bbaabdfc # v1.12.4
