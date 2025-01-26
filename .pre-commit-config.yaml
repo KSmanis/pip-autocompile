@@ -50,7 +50,7 @@ repos:
         args: ["--number", "--wrap", "80"]
         exclude: "^CHANGELOG.md$"
   - repo: https://github.com/igorshubovych/markdownlint-cli
-    rev: v0.43.0
+    rev: v0.44.0
     hooks:
       - id: markdownlint
   # Python
