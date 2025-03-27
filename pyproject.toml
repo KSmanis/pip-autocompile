@@ -59,7 +59,7 @@ pygit2 = [
   {python = "~3.9", version = "~1.15.1"},
 ]
 python = "^3.9"
-python-on-whales = "^0.73.0"
+python-on-whales = "^0.76.0"
 
 [tool.poetry.group.lint.dependencies]
 mypy = "^1.12.0"
