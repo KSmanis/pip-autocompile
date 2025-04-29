@@ -1201,25 +1201,18 @@ yaml = ["PyYaml (>=6.0.1)"]
 
 [[package]]
 name = "python-on-whales"
-version = "0.73.0"
+version = "0.76.1"
 description = "A Docker client for Python, designed to be fun and intuitive!"
 optional = false
 python-versions = "<4,>=3.8"
 files = [
-    {file = "python_on_whales-0.73.0-py3-none-any.whl", hash = "sha256:66f31749c2544a0aacb4e3ba03772c2e9227235ea1aecd58aa7a4cdcf26f559a"},
-    {file = "python_on_whales-0.73.0.tar.gz", hash = "sha256:c76bf3633550e5c948fb4215918364f45efaddb2e09df5ddd169132f7ffdc249"},
+    {file = "python_on_whales-0.76.1-py3-none-any.whl", hash = "sha256:7a930ae25e9f07fd2bd3fb2f22c714a62105f7464f985ab342eeebc71c02c22c"},
+    {file = "python_on_whales-0.76.1.tar.gz", hash = "sha256:6ac4ea947a0466402a857a31ce3340b50be8a6f1f7e6075f74fbef410b4914cd"},
 ]
 
 [package.dependencies]
 pydantic = ">=2.1.dev0,<3"
-requests = "*"
-tqdm = "*"
-typer = ">=0.4.1"
 typing-extensions = "*"
-
-[package.extras]
-dev = ["ruff (==0.5.6)"]
-test = ["pytest"]
 
 [[package]]
 name = "python-semantic-release"
@@ -1435,43 +1428,6 @@ files = [
 ]
 
 [[package]]
-name = "tqdm"
-version = "4.66.5"
-description = "Fast, Extensible Progress Meter"
-optional = false
-python-versions = ">=3.7"
-files = [
-    {file = "tqdm-4.66.5-py3-none-any.whl", hash = "sha256:90279a3770753eafc9194a0364852159802111925aa30eb3f9d85b0e805ac7cd"},
-    {file = "tqdm-4.66.5.tar.gz", hash = "sha256:e1020aef2e5096702d8a025ac7d16b1577279c9d63f8375b63083e9a5f0fcbad"},
-]
-
-[package.dependencies]
-colorama = {version = "*", markers = "platform_system == \"Windows\""}
-
-[package.extras]
-dev = ["pytest (>=6)", "pytest-cov", "pytest-timeout", "pytest-xdist"]
-notebook = ["ipywidgets (>=6)"]
-slack = ["slack-sdk"]
-telegram = ["requests"]
-
-[[package]]
-name = "typer"
-version = "0.12.5"
-description = "Typer, build great CLIs. Easy to code. Based on Python type hints."
-optional = false
-python-versions = ">=3.7"
-files = [
-    {file = "typer-0.12.5-py3-none-any.whl", hash = "sha256:62fe4e471711b147e3365034133904df3e235698399bc4de2b36c8579298d52b"},
-    {file = "typer-0.12.5.tar.gz", hash = "sha256:f592f089bedcc8ec1b974125d64851029c3b1af145f04aca64d69410f0c9b722"},
-]
-
-[package.dependencies]
-click = ">=8.0.0"
-rich = ">=10.11.0"
-shellingham = ">=1.3.0"
-typing-extensions = ">=3.7.4.3"
-
-[[package]]
 name = "typing-extensions"
 version = "4.12.2"
 description = "Backported and Experimental Type Hints for Python 3.8+"
@@ -1643,4 +1599,4 @@ type = ["pytest-mypy"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.9"
-content-hash = "7516482461276186c01f5c0ac2af208768c5b52654afb38508fde4730898c709"
+content-hash = "a74ab41efa4d8459da3158a0b8775893f0f6ce430d23a9305ba43c4cbc3ace6f"
